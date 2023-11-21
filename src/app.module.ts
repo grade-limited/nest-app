@@ -10,6 +10,7 @@ import { AccesspointModule } from './accesspoint/accesspoint.module';
 import { AdminModule } from './admin/admin.module';
 import { SessionsModule as EmployeeSessionsModule } from './employees-sessions/sessions.module';
 import { BrandsModule } from './brands/brands.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { BrandsModule } from './brands/brands.module';
     RolesModule,
     PermissionsModule,
     BrandsModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
