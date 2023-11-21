@@ -1,0 +1,13 @@
+[Unit]
+Description=grade api
+After=network.target
+[Service]
+WorkingDirectory={{WORKING_DIRECTORY_HERE}}
+ExecStartPre=/bin/npm install
+ExecStartPre=/bin/npm run build
+ExecStart=/bin/npm run start:prod
+User={{USER_HERE}}
+Restart=on-failure
+RestartSec=10
+[Install]
+WantedBy=multi-user.target
