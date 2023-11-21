@@ -11,6 +11,7 @@ import { AdminModule } from './admin/admin.module';
 import { SessionsModule as EmployeeSessionsModule } from './employees-sessions/sessions.module';
 import { BrandsModule } from './brands/brands.module';
 import { ProductsModule } from './products/products.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProductsModule } from './products/products.module';
     PermissionsModule,
     BrandsModule,
     ProductsModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
