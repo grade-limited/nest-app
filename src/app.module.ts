@@ -9,6 +9,7 @@ import { RolesModule } from './roles/roles.module';
 import { AccesspointModule } from './accesspoint/accesspoint.module';
 import { AdminModule } from './admin/admin.module';
 import { SessionsModule as EmployeeSessionsModule } from './employees-sessions/sessions.module';
+import { BrandsModule } from './brands/brands.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SessionsModule as EmployeeSessionsModule } from './employees-sessions/s
     AccesspointModule,
     RolesModule,
     PermissionsModule,
+    BrandsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

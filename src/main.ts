@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
   const config = new DocumentBuilder()
-    .setTitle('Target Admission - API')
+    .setTitle('Grade- API')
     .setDescription('Main Backend Service of the Application')
     .setVersion('1.0')
     .addBearerAuth()
