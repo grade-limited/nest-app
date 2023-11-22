@@ -15,7 +15,7 @@ export class CategoriesService {
   async create(createCategoryDto: CreateCategoryDto) {
     const { name, description, thumbnail_url, cover_url, icon_url, parent_id } =
       createCategoryDto;
-    await Category.create({
+    await Categories.create({
       name,
       description,
       thumbnail_url,
@@ -40,7 +40,7 @@ export class CategoriesService {
       parent_id,
     });
     return pagination.arrange(
-      await Category.findAndCountAll({
+      await Categories.findAndCountAll({
         where: {
           [Op.or]: search_ops,
           ...filters,
@@ -60,10 +60,10 @@ export class CategoriesService {
   }
 
   async findOne(id: number) {
-    const category = await Category.findByPk(id, {
+    const category = await Categories.findByPk(id, {
       include: [
         {
-          association: 'brand',
+          association: 'category',
         },
       ],
       paranoid: false,
@@ -81,7 +81,7 @@ export class CategoriesService {
     const { name, description, thumbnail_url, cover_url, icon_url, parent_id } =
       updateCategoryDto;
 
-    const product = await Category.findByPk(id);
+    const category = await Categories.findByPk(id);
     if (!category) {
       throw new NotFoundException(`category not found`);
     }
@@ -99,7 +99,7 @@ export class CategoriesService {
   }
 
   async remove(id: number, permanent?: boolean, restore?: boolean) {
-    const category = await Category.findByPk(id, {
+    const category = await Categories.findByPk(id, {
       paranoid: false,
     });
 
