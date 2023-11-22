@@ -46,7 +46,7 @@ export class CategoriesController {
   @ApiQuery(SearchQuery)
   findAll(
     @Query() query: IPaginationQuery,
-    @Query('parent_id') question_id?: number,
+    @Query('parent_id') parent_id?: number,
   ) {
     return this.categoriesService.findAll(query, parent_id);
   }
