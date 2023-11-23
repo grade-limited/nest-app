@@ -48,7 +48,7 @@ class Product extends Model<Product> {
   @Column(DataType.BIGINT)
   'category_id': number;
 
-  @BelongsTo(() => Brand)
+  @BelongsTo(() => Category)
   'category': Category;
 
   @CreatedAt

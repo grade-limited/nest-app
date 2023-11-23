@@ -9,7 +9,9 @@ import {
   CreatedAt,
   UpdatedAt,
   DeletedAt,
+  HasMany,
 } from 'sequelize-typescript';
+import Product from 'src/products/entities/product.entity';
 @Table({
   tableName: 'brand',
 })
@@ -33,6 +35,9 @@ class Brand extends Model<Brand> {
   @AllowNull
   @Column
   'cover_url': string;
+
+  @HasMany(() => Product)
+  'products': Product[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

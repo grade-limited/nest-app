@@ -54,13 +54,11 @@ export class ProductsService {
         include: [
           {
             association: 'brand',
-            attributes: ['id', 'name', 'description'],
-            include: [
-              {
-                association: 'category',
-                attributes: ['id', 'name', 'description'],
-              },
-            ],
+            //attributes: ['id', 'name', 'description'],
+          },
+          {
+            association: 'category',
+            //attributes: ['id', 'name', 'description'],
           },
         ],
         order,
@@ -76,11 +74,9 @@ export class ProductsService {
       include: [
         {
           association: 'brand',
-          include: [
-            {
-              association: 'category',
-            },
-          ],
+        },
+        {
+          association: 'category',
         },
       ],
       paranoid: false,

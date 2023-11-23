@@ -48,7 +48,7 @@ export class CategoriesService {
         },
         include: [
           {
-            association: 'category',
+            association: 'parent',
           },
         ],
         order,
@@ -63,7 +63,7 @@ export class CategoriesService {
     const category = await Categories.findByPk(id, {
       include: [
         {
-          association: 'category',
+          association: 'parent',
         },
       ],
       paranoid: false,

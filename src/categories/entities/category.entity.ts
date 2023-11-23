@@ -13,6 +13,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import Product from 'src/products/entities/product.entity';
 
 @Table({
   tableName: 'category',
@@ -38,6 +39,9 @@ class Category extends Model<Category> {
 
   @Column
   'icon_url': string;
+
+  @HasMany(() => Product)
+  'productss': Product[];
 
   @ForeignKey(() => Category)
   @AllowNull
