@@ -11,8 +11,8 @@ export class CreateProductDto {
   @ApiProperty()
   'thumbnail_url': string;
 
-  //   @ApiProperty()
-  //   'category_id': number;
+  @ApiProperty()
+  'category_id': number;
 
   @ApiProperty()
   'brand_id': number;

@@ -13,12 +13,14 @@ import { Op } from 'sequelize';
 @Injectable()
 export class ProductsService {
   async create(createProductDto: CreateProductDto) {
-    const { name, description, brand_id, thumbnail_url } = createProductDto;
+    const { name, description, category_id, brand_id, thumbnail_url } =
+      createProductDto;
 
     await Product.create({
       name,
       description,
       brand_id,
+      category_id,
       thumbnail_url,
     });
     return {
@@ -27,7 +29,11 @@ export class ProductsService {
     };
   }
 
-  async findAll(query: IPaginationQuery, brand_id?: number) {
+  async findAll(
+    query: IPaginationQuery,
+    brand_id?: number,
+    category_id: number,
+  ) {
     const pagination = new Pagination(query);
 
     const { limit, offset, paranoid, trash_query, order } =
@@ -36,7 +42,7 @@ export class ProductsService {
     const search_ops = pagination.get_search_ops(['name']);
     const filters = pagination.format_filters({
       brand_id,
-      //category_id
+      category_id,
     });
     return pagination.arrange(
       await Product.findAndCountAll({
@@ -48,21 +54,15 @@ export class ProductsService {
         include: [
           {
             association: 'brand',
-            //'category',
             attributes: ['id', 'name', 'description'],
+            include: [
+              {
+                association: 'category',
+                attributes: ['id', 'name', 'description'],
+              },
+            ],
           },
         ],
-        //attributes:
-        // {
-        //   include: [
-        //     [
-        //       sequelize.literal(
-        //         `(SELECT COUNT(*) FROM topic WHERE topic.chapter_id = Chapter.id)`,
-        //       ),
-        //       'total_topics',
-        //     ],
-        //   ],
-        // },
         order,
         paranoid,
         limit,
@@ -76,6 +76,11 @@ export class ProductsService {
       include: [
         {
           association: 'brand',
+          include: [
+            {
+              association: 'category',
+            },
+          ],
         },
       ],
       paranoid: false,
@@ -91,7 +96,8 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    const { name, description, brand_id, thumbnail_url } = updateProductDto;
+    const { name, description, brand_id, thumbnail_url, category_id } =
+      updateProductDto;
 
     const product = await Product.findByPk(id);
     if (!product) {
@@ -101,6 +107,7 @@ export class ProductsService {
       name,
       description,
       brand_id,
+      category_id,
       thumbnail_url,
     });
     return {
