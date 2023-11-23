@@ -13,6 +13,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import Brand from 'src/brands/entities/brand.entity';
+import Category from 'src/categories/entities/category.entity';
 
 @Table({
   tableName: 'product',
@@ -41,6 +42,14 @@ class Product extends Model<Product> {
 
   @BelongsTo(() => Brand)
   'brand': Brand;
+
+  @ForeignKey(() => Category)
+  @AllowNull
+  @Column(DataType.BIGINT)
+  'category_id': number;
+
+  @BelongsTo(() => Brand)
+  'category': Category;
 
   @CreatedAt
   @Column({ field: 'created_at' })

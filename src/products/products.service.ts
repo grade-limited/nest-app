@@ -32,7 +32,7 @@ export class ProductsService {
   async findAll(
     query: IPaginationQuery,
     brand_id?: number,
-    category_id: number,
+    category_id?: number,
   ) {
     const pagination = new Pagination(query);
 
