@@ -29,15 +29,15 @@ class Brand extends Model<Brand> {
   @Column
   'name': string;
 
-  @AllowNull
+  @AllowNull(true)
   @Column
   'description': string;
 
-  @AllowNull
+  @AllowNull(true)
   @Column
   'thumbnail_url': string;
 
-  @AllowNull
+  @AllowNull(true)
   @Column
   'cover_url': string;
 

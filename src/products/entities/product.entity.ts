@@ -32,11 +32,11 @@ class Product extends Model<Product> {
   @Column
   'name': string;
 
-  @AllowNull
+  @AllowNull(true)
   @Column
   'description': string;
 
-  @AllowNull
+  @AllowNull(true)
   @Column
   'thumbnail_url': string;
 
