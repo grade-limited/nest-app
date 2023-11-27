@@ -12,6 +12,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  NotEmpty,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 
@@ -25,6 +26,7 @@ class Category extends Model<Category> {
   'id': number;
 
   @AllowNull(false)
+  @NotEmpty
   @Column
   'name': string;
 
