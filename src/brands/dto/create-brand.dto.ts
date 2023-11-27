@@ -5,7 +5,9 @@ export class CreateBrandDto {
   })
   'name': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'description': string;
 
   @ApiProperty()
