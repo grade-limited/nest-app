@@ -14,20 +14,30 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 @Injectable()
 export class CategoriesService {
   async create(createCategoryDto: CreateCategoryDto) {
-    const { name, description, thumbnail_url, cover_url, icon_url, parent_id } =
-      createCategoryDto;
-    await Categories.create({
-      name,
-      description,
-      thumbnail_url,
-      cover_url,
-      icon_url,
-      parent_id,
-    });
-    return {
-      statusCode: 201,
-      message: `${name} registered as a category successfully`,
-    };
+    try {
+      const {
+        name,
+        description,
+        thumbnail_url,
+        cover_url,
+        icon_url,
+        parent_id,
+      } = createCategoryDto;
+      await Categories.create({
+        name,
+        description,
+        thumbnail_url,
+        cover_url,
+        icon_url,
+        parent_id,
+      });
+      return {
+        statusCode: 201,
+        message: `${name} registered as a category successfully`,
+      };
+    } catch (error) {
+      throw new BadRequestException(error?.errors?.[0]?.message || error);
+    }
   }
 
   async findAll(query: IPaginationQuery, parent_id?: number) {
@@ -61,42 +71,60 @@ export class CategoriesService {
   }
 
   async findOne(id: number) {
-    const category = await Categories.findByPk(id, {
-      include: [
-        {
-          association: 'parent',
-        },
-      ],
-      paranoid: false,
-    });
-    if (!category) {
-      throw new NotFoundException(`category not found`);
+    try {
+      const category = await Categories.findByPk(id, {
+        include: [
+          {
+            association: 'parent',
+          },
+        ],
+        paranoid: false,
+      });
+      if (!category) {
+        throw new NotFoundException(`category not found`);
+      }
+      return {
+        message: 'category fetched successfully',
+        data: category,
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-    return {
-      message: 'category fetched successfully',
-      data: category,
-    };
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    const { name, description, thumbnail_url, cover_url, icon_url, parent_id } =
-      updateCategoryDto;
+    try {
+      const {
+        name,
+        description,
+        thumbnail_url,
+        cover_url,
+        icon_url,
+        parent_id,
+      } = updateCategoryDto;
 
-    const category = await Categories.findByPk(id);
-    if (!category) {
-      throw new NotFoundException(`category not found`);
+      const category = await Categories.findByPk(id);
+      if (!category) {
+        throw new NotFoundException(`category not found`);
+      }
+      await category.update({
+        name,
+        description,
+        thumbnail_url,
+        cover_url,
+        icon_url,
+        parent_id,
+      });
+      return {
+        message: 'category updated successfully',
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-    await category.update({
-      name,
-      description,
-      thumbnail_url,
-      cover_url,
-      icon_url,
-      parent_id,
-    });
-    return {
-      message: 'category updated successfully',
-    };
   }
 
   async remove(id: number, permanent?: boolean, restore?: boolean) {
@@ -117,7 +145,7 @@ export class CategoriesService {
       if (category.deleted_at === null) {
         throw new BadRequestException(`category not deleted`);
       }
-      category.restore();
+      await category.restore();
       return {
         message: 'category restored successfully',
       };

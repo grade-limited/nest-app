@@ -9,24 +9,31 @@ import Product from './entities/product.entity';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
+import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class ProductsService {
   async create(createProductDto: CreateProductDto) {
-    const { name, description, category_id, brand_id, thumbnail_url } =
-      createProductDto;
+    try {
+      const { name, description, category_id, brand_id, thumbnail_url } =
+        createProductDto;
 
-    await Product.create({
-      name,
-      description,
-      brand_id,
-      category_id,
-      thumbnail_url,
-    });
-    return {
-      statusCode: 201,
-      message: `${name} Registered as a product successfully`,
-    };
+      await Product.create({
+        name,
+        description,
+        brand_id,
+        category_id,
+        thumbnail_url,
+      });
+      return {
+        statusCode: 201,
+        message: `${name} Registered as a product successfully`,
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
+    }
   }
 
   async findAll(
@@ -70,45 +77,57 @@ export class ProductsService {
   }
 
   async findOne(id: number) {
-    const product = await Product.findByPk(id, {
-      include: [
-        {
-          association: 'brand',
-        },
-        {
-          association: 'category',
-        },
-      ],
-      paranoid: false,
-    });
+    try {
+      const product = await Product.findByPk(id, {
+        include: [
+          {
+            association: 'brand',
+          },
+          {
+            association: 'category',
+          },
+        ],
+        paranoid: false,
+      });
 
-    if (!product) {
-      throw new NotFoundException(`Product not found`);
+      if (!product) {
+        throw new NotFoundException(`Product not found`);
+      }
+      return {
+        message: 'Product fetched successfully',
+        data: product,
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-    return {
-      message: 'Product fetched successfully',
-      data: product,
-    };
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    const { name, description, brand_id, thumbnail_url, category_id } =
-      updateProductDto;
+    try {
+      const { name, description, brand_id, thumbnail_url, category_id } =
+        updateProductDto;
 
-    const product = await Product.findByPk(id);
-    if (!product) {
-      throw new NotFoundException(`Product not found`);
+      const product = await Product.findByPk(id);
+      if (!product) {
+        throw new NotFoundException(`Product not found`);
+      }
+      await product.update({
+        name,
+        description,
+        brand_id,
+        category_id,
+        thumbnail_url,
+      });
+      return {
+        message: 'Product updated successfully',
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-    await product.update({
-      name,
-      description,
-      brand_id,
-      category_id,
-      thumbnail_url,
-    });
-    return {
-      message: 'Product updated successfully',
-    };
   }
 
   async remove(id: number, permanent?: boolean, restore?: boolean) {
@@ -120,12 +139,12 @@ export class ProductsService {
       throw new NotFoundException(`Product not found`);
     }
 
-    if (permanent) {
+    if (toBoolean(permanent)) {
       await product.destroy({ force: true });
       return {
         message: 'Product deleted permanently',
       };
-    } else if (restore) {
+    } else if (toBoolean(restore)) {
       if (product.deleted_at === null) {
         throw new BadRequestException(`Product not deleted`);
       }
