@@ -14,18 +14,24 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 @Injectable()
 export class BrandsService {
   async create(createChapterDto: CreateBrandDto) {
-    const { name, description, thumbnail_url, cover_url } = createChapterDto;
+    try {
+      const { name, description, thumbnail_url, cover_url } = createChapterDto;
 
-    await Brand.create({
-      name,
-      description,
-      thumbnail_url,
-      cover_url,
-    });
-    return {
-      statusCode: 201,
-      message: `${name} registered as a Brand successfully`,
-    };
+      await Brand.create({
+        name,
+        description,
+        thumbnail_url,
+        cover_url,
+      });
+      return {
+        statusCode: 201,
+        message: `${name} registered as a Brand successfully`,
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
+    }
   }
 
   async findAll(query: IPaginationQuery) {
@@ -54,41 +60,51 @@ export class BrandsService {
   }
 
   async findOne(id: number) {
-    const brand = await Brand.findByPk(id, {
-      attributes: {
-        exclude: ['password'],
-      },
-      paranoid: false,
-    });
+    try {
+      const brand = await Brand.findByPk(id, {
+        attributes: {
+          exclude: ['password'],
+        },
+        paranoid: false,
+      });
 
-    if (!brand) {
-      throw new NotFoundException(`Brand not found`);
+      if (!brand) {
+        throw new NotFoundException(`Brand not found`);
+      }
+
+      return {
+        message: 'Information fetched successfully',
+        data: brand,
+      };
+    } catch (error) {
+      throw new BadRequestException(error?.errors?.[0]?.message || error);
     }
-
-    return {
-      message: 'Information fetched successfully',
-      data: brand,
-    };
   }
   async update(id: number, updateBrandDto: UpdateBrandDto) {
-    const { name, description, thumbnail_url, cover_url } = updateBrandDto;
+    try {
+      const { name, description, thumbnail_url, cover_url } = updateBrandDto;
 
-    const brand = await Brand.findByPk(id, {});
+      const brand = await Brand.findByPk(id, {});
 
-    if (!brand) {
-      throw new NotFoundException(`Brand not found`);
+      if (!brand) {
+        throw new NotFoundException(`Brand not found`);
+      }
+
+      await brand.update({
+        name,
+        description,
+        thumbnail_url,
+        cover_url,
+      });
+
+      return {
+        message: 'Information updated successfully',
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-
-    await brand.update({
-      name,
-      description,
-      thumbnail_url,
-      cover_url,
-    });
-
-    return {
-      message: 'Information updated successfully',
-    };
   }
 
   async remove(id: number, permanent?: boolean, restore?: boolean) {
