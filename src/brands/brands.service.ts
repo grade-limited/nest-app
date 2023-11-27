@@ -9,6 +9,7 @@ import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import Brand from './entities/brand.entity';
+import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class BrandsService {
@@ -99,12 +100,12 @@ export class BrandsService {
       throw new NotFoundException('No brand found!');
     }
 
-    if (permanent) {
+    if (toBoolean(permanent)) {
       await brand.destroy({ force: true });
       return {
         message: 'Brand deleted successfully',
       };
-    } else if (restore) {
+    } else if (toBoolean(restore)) {
       if (!brand.deleted_at) throw new BadRequestException('Brand not deleted');
 
       await brand.restore();

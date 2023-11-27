@@ -9,6 +9,7 @@ import Product from './entities/product.entity';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
+import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class ProductsService {
@@ -120,12 +121,12 @@ export class ProductsService {
       throw new NotFoundException(`Product not found`);
     }
 
-    if (permanent) {
+    if (toBoolean(permanent)) {
       await product.destroy({ force: true });
       return {
         message: 'Product deleted permanently',
       };
-    } else if (restore) {
+    } else if (toBoolean(restore)) {
       if (product.deleted_at === null) {
         throw new BadRequestException(`Product not deleted`);
       }

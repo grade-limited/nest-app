@@ -117,7 +117,7 @@ export class CategoriesService {
       if (category.deleted_at === null) {
         throw new BadRequestException(`category not deleted`);
       }
-      category.restore();
+      await category.restore();
       return {
         message: 'category restored successfully',
       };
