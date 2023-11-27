@@ -119,7 +119,7 @@ export class BrandsService {
     if (toBoolean(permanent)) {
       await brand.destroy({ force: true });
       return {
-        message: 'Brand deleted successfully',
+        message: 'Brand deleted permanently',
       };
     } else if (toBoolean(restore)) {
       if (!brand.deleted_at) throw new BadRequestException('Brand not deleted');
