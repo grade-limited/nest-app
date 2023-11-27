@@ -9,6 +9,7 @@ import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import Categories from './entities/category.entity';
 import { Op } from 'sequelize';
+import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class CategoriesService {
@@ -107,12 +108,12 @@ export class CategoriesService {
       throw new NotFoundException(`category not found`);
     }
 
-    if (permanent) {
+    if (toBoolean(permanent)) {
       await category.destroy({ force: true });
       return {
         message: 'category deleted permanently',
       };
-    } else if (restore) {
+    } else if (toBoolean(restore)) {
       if (category.deleted_at === null) {
         throw new BadRequestException(`category not deleted`);
       }
