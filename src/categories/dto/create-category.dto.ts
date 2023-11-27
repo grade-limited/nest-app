@@ -5,18 +5,28 @@ export class CreateCategoryDto {
   })
   'name': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'description': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'parent_id': number;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'thumbnail_url': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'cover_url': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'icon_url': string;
 }

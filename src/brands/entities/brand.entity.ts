@@ -10,6 +10,7 @@ import {
   UpdatedAt,
   DeletedAt,
   HasMany,
+  NotEmpty,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 @Table({
@@ -21,6 +22,10 @@ class Brand extends Model<Brand> {
   @Column(DataType.BIGINT)
   'id': number;
 
+  @AllowNull(false)
+  @NotEmpty({
+    msg: "Name can't be empty",
+  })
   @Column
   'name': string;
 

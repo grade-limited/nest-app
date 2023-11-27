@@ -5,15 +5,23 @@ export class CreateProductDto {
   })
   'name': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'description': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'thumbnail_url': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'category_id': number;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'brand_id': number;
 }

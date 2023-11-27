@@ -26,7 +26,9 @@ class Category extends Model<Category> {
   'id': number;
 
   @AllowNull(false)
-  @NotEmpty
+  @NotEmpty({
+    msg: "Name can't be empty",
+  })
   @Column
   'name': string;
 
@@ -43,7 +45,7 @@ class Category extends Model<Category> {
   'icon_url': string;
 
   @HasMany(() => Product)
-  'productss': Product[];
+  'products': Product[];
 
   @ForeignKey(() => Category)
   @AllowNull

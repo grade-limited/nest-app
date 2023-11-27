@@ -11,6 +11,7 @@ import {
   DeletedAt,
   ForeignKey,
   BelongsTo,
+  NotEmpty,
 } from 'sequelize-typescript';
 import Brand from 'src/brands/entities/brand.entity';
 import Category from 'src/categories/entities/category.entity';
@@ -24,6 +25,10 @@ class Product extends Model<Product> {
   @Column(DataType.BIGINT)
   'id': number;
 
+  @AllowNull(false)
+  @NotEmpty({
+    msg: "Name can't be empty",
+  })
   @Column
   'name': string;
 

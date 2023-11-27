@@ -10,9 +10,13 @@ export class CreateBrandDto {
   })
   'description': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'thumbnail_url': string;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   'cover_url': string;
 }
