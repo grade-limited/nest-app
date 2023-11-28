@@ -40,7 +40,11 @@ export class CategoriesService {
     }
   }
 
-  async findAll(query: IPaginationQuery, parent_id?: number) {
+  async findAll(
+    query: IPaginationQuery,
+    parent_id?: number,
+    only_parent?: boolean,
+  ) {
     const pagination = new Pagination(query);
 
     const { limit, offset, paranoid, trash_query, order } =
@@ -56,6 +60,11 @@ export class CategoriesService {
           [Op.or]: search_ops,
           ...filters,
           ...trash_query,
+          ...(toBoolean(only_parent)
+            ? {
+                parent_id: { [Op.eq]: null },
+              }
+            : {}),
         },
         include: [
           {

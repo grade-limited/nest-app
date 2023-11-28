@@ -38,6 +38,11 @@ export class CategoriesController {
     type: 'number',
     required: false,
   })
+  @ApiQuery({
+    name: 'only_parent',
+    type: 'boolean',
+    required: false,
+  })
   @ApiQuery(TrashQuery)
   @ApiQuery(ShowParanoidQuery)
   @ApiQuery(SortQuery)
@@ -47,8 +52,9 @@ export class CategoriesController {
   findAll(
     @Query() query: IPaginationQuery,
     @Query('parent_id') parent_id?: number,
+    @Query('only_parent') only_parent?: boolean,
   ) {
-    return this.categoriesService.findAll(query, parent_id);
+    return this.categoriesService.findAll(query, parent_id, only_parent);
   }
 
   @Get(':id')
