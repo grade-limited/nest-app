@@ -12,6 +12,7 @@ import Role from 'src/roles/entities/role.entity';
 import { Op } from 'sequelize';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import { nanoid } from 'nanoid';
+import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class EmployeesService {
@@ -116,60 +117,72 @@ export class EmployeesService {
   }
 
   async findOne(id: number) {
-    const employee = await Employee.findByPk(id, {
-      include: {
-        model: Role,
-        as: 'role',
-        attributes: ['id', 'name', 'prefix'],
-      },
-      attributes: {
-        exclude: ['password'],
-      },
-      paranoid: false,
-    });
+    try {
+      const employee = await Employee.findByPk(id, {
+        include: {
+          model: Role,
+          as: 'role',
+          attributes: ['id', 'name', 'prefix'],
+        },
+        attributes: {
+          exclude: ['password'],
+        },
+        paranoid: false,
+      });
 
-    if (!employee) {
-      throw new NotFoundException(`Employee not found`);
+      if (!employee) {
+        throw new NotFoundException(`Employee not found`);
+      }
+
+      return {
+        message: 'Information fetched successfully',
+        data: employee,
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-
-    return {
-      message: 'Information fetched successfully',
-      data: employee,
-    };
   }
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    const {
-      first_name,
-      last_name,
-      gender,
-      email,
-      dob,
-      role_id,
-      address,
-      max_session,
-    } = updateEmployeeDto;
+    try {
+      const {
+        first_name,
+        last_name,
+        gender,
+        email,
+        dob,
+        role_id,
+        address,
+        max_session,
+      } = updateEmployeeDto;
 
-    const employee = await Employee.findByPk(id, {});
+      const employee = await Employee.findByPk(id, {});
 
-    if (!employee) {
-      throw new NotFoundException(`Employee not found`);
+      if (!employee) {
+        throw new NotFoundException(`Employee not found`);
+      }
+
+      await employee.update({
+        first_name,
+        last_name,
+        gender,
+        email,
+        dob,
+        role_id,
+        address,
+        max_session,
+      });
+
+      return {
+        message: 'Information updated successfully',
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-
-    await employee.update({
-      first_name,
-      last_name,
-      gender,
-      email,
-      dob,
-      role_id,
-      address,
-      max_session,
-    });
-
-    return {
-      message: 'Information updated successfully',
-    };
   }
 
   public async activeInactive(id: number) {
@@ -202,12 +215,12 @@ export class EmployeesService {
       throw new NotFoundException(`Employee not found`);
     }
 
-    if (permanent) {
+    if (toBoolean(permanent)) {
       employee.destroy({ force: true });
       return {
         message: `Employee deleted permanently.`,
       };
-    } else if (restore) {
+    } else if (toBoolean(restore)) {
       if (employee.deleted_at === null)
         throw new BadRequestException(`Employee not deleted`);
       employee.restore();

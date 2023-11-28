@@ -11,6 +11,7 @@ import Role from './entities/role.entity';
 import Pagination from 'src/utils/Pagination';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import { Op, Sequelize } from 'sequelize';
+import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class RolesService {
@@ -84,7 +85,7 @@ export class RolesService {
   }
 
   async findOne(id: number) {
-    {
+    try {
       const role = await Role.findByPk(id, {
         paranoid: false,
       });
@@ -98,6 +99,10 @@ export class RolesService {
         message: 'Information fetched successfully',
         data: role,
       };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
   }
 
@@ -143,12 +148,12 @@ export class RolesService {
 
     if (!role) throw new NotFoundException('No role found!');
 
-    if (permanent) {
+    if (toBoolean(permanent)) {
       role.destroy({ force: true });
       return {
         message: `Role deleted permanently.`,
       };
-    } else if (restore) {
+    } else if (toBoolean(restore)) {
       if (role.deleted_at === null)
         throw new BadRequestException('Role is not deleted!');
 
