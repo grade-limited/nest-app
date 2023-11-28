@@ -12,14 +12,19 @@ import { SessionsModule as EmployeeSessionsModule } from './employees-sessions/s
 import { BrandsModule } from './brands/brands.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { SessionsModule as UserSessionsModule } from './users-sessions/sessions.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
     DatabaseModule,
+    AuthModule,
+    UsersModule,
+    UserSessionsModule,
     AdminModule,
     EmployeesModule,
     EmployeeSessionsModule,

@@ -3,7 +3,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { UpdateAdminDto } from './dto/update-auth.dto';
 import { LoginDto } from './dto/login.dto';
 import { VerifyDto } from './dto/verify.dto';
 import { ResetPassDto } from './dto/reset-pass.dto';
@@ -117,7 +117,7 @@ export class AuthService {
   }
 
   // Update employee information
-  async update(user: any, updateAuthDto: UpdateAuthDto) {
+  async update(user: any, updateAuthDto: UpdateAdminDto) {
     // Find employee
     const employee = await Employee.findByPk(user.id);
 
