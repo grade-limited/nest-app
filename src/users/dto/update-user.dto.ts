@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateAdminDto {
+export class UpdateUserDto {
   @ApiProperty()
   first_name?: string;
 
@@ -8,13 +8,10 @@ export class UpdateAdminDto {
   last_name?: string;
 
   @ApiProperty()
-  email?: string;
+  gender?: string;
 
   @ApiProperty()
   display_picture?: string;
-
-  @ApiProperty()
-  gender?: string;
 
   @ApiProperty()
   dob?: Date;

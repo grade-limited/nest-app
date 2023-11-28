@@ -5,14 +5,14 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import Pagination from 'src/utils/Pagination';
-import Session from './entities/employee-session.entity';
-import Employee from 'src/employees/entities/employee.entity';
+import Session from './entities/user-session.entity';
+import User from 'src/users/entities/user.entity';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class SessionsService {
-  async findAll(query: IPaginationQuery, employee?: number) {
+  async findAll(query: IPaginationQuery, user?: number) {
     const pagination = new Pagination(query);
 
     // get query props
@@ -27,7 +27,7 @@ export class SessionsService {
 
     // get filter props
     const filters = pagination.format_filters({
-      user_id: employee,
+      user_id: user,
     });
 
     return pagination.arrange(
@@ -38,7 +38,7 @@ export class SessionsService {
           ...trash_query,
         },
         include: {
-          model: Employee,
+          model: User,
           as: 'user',
           attributes: [
             'id',

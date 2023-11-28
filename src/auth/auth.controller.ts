@@ -10,19 +10,26 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
-import { AuthService } from './admin.service';
-import { UpdateAdminDto } from './dto/update-auth.dto';
+import { AuthService } from './auth.service';
+import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
 import { VerifyDto } from './dto/verify.dto';
 import { ResetPassDto } from './dto/reset-pass.dto';
 import { RealIP } from 'nestjs-real-ip';
-import { AdminGuard } from './admin.guard';
+import { AuthGuard } from './auth.guard';
+import { RegisterDto } from './dto/register.dto';
 
-@ApiTags('Admin')
-@Controller('admin')
+@ApiTags('Authentication')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Post('signup')
+  @HttpCode(201)
+  signup(@Body() registerDto: RegisterDto) {
+    return this.authService.signup(registerDto);
+  }
 
   @Post('signin')
   @HttpCode(200)
@@ -36,29 +43,29 @@ export class AuthController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard)
   @Get('validate')
   validate(@Request() req) {
     return this.authService.validate(req.user);
   }
 
   @ApiBearerAuth()
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard)
   @Patch('reset-password')
   resetpass(@Request() req, @Body() resetPassDto: ResetPassDto) {
     return this.authService.resetpass(req.user, resetPassDto);
   }
 
   @ApiBearerAuth()
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard)
   @Patch('update')
   @HttpCode(201)
-  update(@Request() req, @Body() updateAuthDto: UpdateAdminDto) {
+  update(@Request() req, @Body() updateAuthDto: UpdateAuthDto) {
     return this.authService.update(req.user, updateAuthDto);
   }
 
   @ApiBearerAuth()
-  @UseGuards(AdminGuard)
+  @UseGuards(AuthGuard)
   @Delete('signout')
   signout(@Request() req) {
     return this.authService.signout(req.jwt_token);

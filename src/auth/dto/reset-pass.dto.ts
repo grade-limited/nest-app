@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class VerifyDto {
+export class ResetPassDto {
   @ApiProperty()
-  token: string;
+  current_password: string;
 
   @ApiProperty()
-  otp: string;
+  new_password: string;
 }

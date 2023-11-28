@@ -11,6 +11,7 @@ import AccessPoint from './entities/accesspoint.entity';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
+import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class AccesspointService {
@@ -96,12 +97,12 @@ export class AccesspointService {
       throw new NotFoundException(`No point found!`);
     }
 
-    if (permanent) {
+    if (toBoolean(permanent)) {
       await point.destroy({ force: true });
       return {
         message: 'Point deleted permanently',
       };
-    } else if (restore) {
+    } else if (toBoolean(restore)) {
       if (!point.deleted_at)
         throw new BadRequestException(`Point is not deleted`);
 
