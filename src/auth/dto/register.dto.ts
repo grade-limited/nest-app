@@ -28,10 +28,10 @@ export class RegisterDto {
   @ApiProperty({
     enum: ['phone', 'email'],
   })
-  primary_contact?: string;
+  primary_contact: string;
 
   @ApiProperty({
     enum: ['API', 'Website', 'Android', 'iOS'],
   })
-  registered_from?: string;
+  registered_from: string;
 }
