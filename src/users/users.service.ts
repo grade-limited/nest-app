@@ -77,7 +77,17 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const { first_name, last_name, gender, dob, address } = updateUserDto;
+    const {
+      first_name,
+      last_name,
+      gender,
+      dob,
+      address,
+      phone,
+      email,
+      display_picture,
+      max_session,
+    } = updateUserDto;
 
     const user = await User.findByPk(id, {});
 
@@ -91,6 +101,10 @@ export class UsersService {
       gender,
       dob,
       address,
+      phone,
+      email,
+      display_picture,
+      max_session,
     });
 
     return {

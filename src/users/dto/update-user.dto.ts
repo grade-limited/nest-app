@@ -8,6 +8,15 @@ export class UpdateUserDto {
   last_name?: string;
 
   @ApiProperty()
+  phone?: string;
+
+  @ApiProperty()
+  email?: string;
+
+  @ApiProperty()
+  max_session?: number;
+
+  @ApiProperty()
   gender?: string;
 
   @ApiProperty()
