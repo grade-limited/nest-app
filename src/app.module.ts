@@ -18,6 +18,7 @@ import { SessionsModule as UserSessionsModule } from './users-sessions/sessions.
 import { OrganizationsModule } from './organizations/organizations.module';
 import { FilesModule } from './files/files.module';
 import { RequestsModule } from './requests/requests.module';
+import { CampaignsModule } from './campaigns/campaigns.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { RequestsModule } from './requests/requests.module';
     OrganizationsModule,
     FilesModule,
     RequestsModule,
+    CampaignsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
