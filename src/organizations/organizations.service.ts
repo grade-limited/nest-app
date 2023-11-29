@@ -40,7 +40,7 @@ export class OrganizationsService {
       });
       return {
         statusCode: 201,
-        message: `${name} Registered as a organization successfully`,
+        message: `${name} registered as a organization successfully`,
       };
     } catch (error) {
       throw new BadRequestException(
@@ -49,11 +49,7 @@ export class OrganizationsService {
     }
   }
 
-  async findAll(
-    query: IPaginationQuery,
-    //name?: string,
-    business_type?: string,
-  ) {
+  async findAll(query: IPaginationQuery, business_type?: string) {
     const pagination = new Pagination(query);
     const { limit, offset, paranoid, trash_query, order } =
       pagination.get_attributes();
@@ -64,7 +60,6 @@ export class OrganizationsService {
       'contact_email',
     ]);
     const filters = pagination.format_filters({
-      // name,
       business_type,
     });
     return pagination.arrange(
@@ -89,11 +84,11 @@ export class OrganizationsService {
       });
 
       if (!organization) {
-        throw new NotFoundException(`User not found`);
+        throw new NotFoundException(`Organization not found`);
       }
 
       return {
-        message: 'organization fetched successfully',
+        message: 'Organization fetched successfully',
         data: organization,
       };
     } catch (error) {
@@ -120,7 +115,7 @@ export class OrganizationsService {
       const organization = await Organization.findByPk(id);
 
       if (!organization) {
-        throw new NotFoundException('Not found Organization');
+        throw new NotFoundException('Organization not found');
       }
       await organization.update({
         name,
@@ -149,13 +144,13 @@ export class OrganizationsService {
     });
 
     if (!organization) {
-      throw new NotFoundException(`organization not found`);
+      throw new NotFoundException(`Organization not found`);
     }
 
     if (toBoolean(permanent)) {
       await organization.destroy({ force: true });
       return {
-        message: 'organization deleted permanently',
+        message: 'Organization deleted permanently',
       };
     } else if (toBoolean(restore)) {
       if (organization.deleted_at === null) {
@@ -163,7 +158,7 @@ export class OrganizationsService {
       }
       organization.restore();
       return {
-        message: 'organization restored successfully',
+        message: 'Organization restored successfully',
       };
     }
 

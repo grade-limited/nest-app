@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  HttpCode,
   Query,
 } from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
@@ -24,7 +23,7 @@ import {
 } from 'src/utils/Pagination/dto/query.dto';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('organizations')
+@ApiTags('Organizations')
 @Controller('organizations')
 export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
@@ -35,11 +34,6 @@ export class OrganizationsController {
   }
 
   @Get()
-  // @ApiQuery({
-  //   name: 'name',
-  //   type: 'string',
-  //   required: false,
-  // })
   @ApiQuery({
     name: 'business_type',
     enum: ['Retail Shop', 'Hotel/Restaurant', 'Corporate Company'],
@@ -54,7 +48,6 @@ export class OrganizationsController {
   @ApiQuery(SearchQuery)
   findAll(
     @Query() query: IPaginationQuery,
-    // @Query('name') name?: string,
     @Query('business_type') business_type?: string,
   ) {
     return this.organizationsService.findAll(query, business_type);
