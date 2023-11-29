@@ -10,7 +10,6 @@ import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import toBoolean from 'src/utils/conversion/toBoolean';
-import { AwaitExpression } from 'ts-morph';
 
 @Injectable()
 export class OrganizationsService {
@@ -59,7 +58,11 @@ export class OrganizationsService {
     const { limit, offset, paranoid, trash_query, order } =
       pagination.get_attributes();
 
-    const search_ops = pagination.get_search_ops(['name']);
+    const search_ops = pagination.get_search_ops([
+      'name',
+      'contact_number',
+      'contact_email',
+    ]);
     const filters = pagination.format_filters({
       // name,
       business_type,
@@ -70,9 +73,6 @@ export class OrganizationsService {
           [Op.or]: search_ops,
           ...filters,
           ...trash_query,
-        },
-        attributes: {
-          exclude: ['password'],
         },
         order,
         limit,
@@ -85,9 +85,6 @@ export class OrganizationsService {
   async findOne(id: number) {
     try {
       const organization = await Organization.findByPk(id, {
-        attributes: {
-          exclude: ['password'], //have to ask
-        },
         paranoid: false,
       });
 

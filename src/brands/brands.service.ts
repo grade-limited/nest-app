@@ -48,9 +48,6 @@ export class BrandsService {
           [Op.or]: search_ops,
           ...trash_query,
         },
-        attributes: {
-          exclude: ['password'],
-        },
         order,
         limit,
         offset,
@@ -62,9 +59,6 @@ export class BrandsService {
   async findOne(id: number) {
     try {
       const brand = await Brand.findByPk(id, {
-        attributes: {
-          exclude: ['password'],
-        },
         paranoid: false,
       });
 
