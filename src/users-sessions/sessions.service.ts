@@ -49,7 +49,7 @@ export class SessionsService {
           ],
         },
         attributes: {
-          exclude: ['user_id'],
+          exclude: ['user_id', 'jwt'],
         },
         order,
         limit,
