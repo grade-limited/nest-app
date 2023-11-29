@@ -16,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SessionsModule as UserSessionsModule } from './users-sessions/sessions.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
     ProductsModule,
     CategoriesModule,
     OrganizationsModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
