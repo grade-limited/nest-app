@@ -53,6 +53,9 @@ export class UsersService {
             ],
           },
         ],
+        attributes: {
+          exclude: ['password'],
+        },
         order,
         limit,
         offset,
@@ -63,6 +66,9 @@ export class UsersService {
 
   async findOne(id: number) {
     const user = await User.findByPk(id, {
+      attributes: {
+        exclude: ['password'],
+      },
       paranoid: false,
     });
 
