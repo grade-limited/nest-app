@@ -47,18 +47,23 @@ class Organization extends Model<Organization> {
   'business_type': string;
 
   @AllowNull(false)
+  @Column
   'business_subtype': string;
 
   @AllowNull(true)
+  @Column
   'website_url': string;
 
   @AllowNull(true)
+  @Column
   'linkedin_url': string;
 
   @AllowNull
+  @Column
   'facebook_url': string;
 
   @AllowNull(true)
+  @Column
   'instagram_url': string;
 
   @CreatedAt
