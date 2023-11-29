@@ -15,6 +15,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SessionsModule as UserSessionsModule } from './users-sessions/sessions.module';
+import { OrganizationsModule } from './organizations/organizations.module';
 import { FilesModule } from './files/files.module';
 
 @Module({
@@ -35,6 +36,7 @@ import { FilesModule } from './files/files.module';
     BrandsModule,
     ProductsModule,
     CategoriesModule,
+    OrganizationsModule,
     FilesModule,
   ],
   controllers: [AppController],
