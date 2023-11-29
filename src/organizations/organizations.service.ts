@@ -123,6 +123,7 @@ export class OrganizationsService {
         throw new NotFoundException('Not found Organization');
       }
       await organization.update({
+        name,
         contact_number,
         contact_email,
         business_type,
