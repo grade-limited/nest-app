@@ -18,6 +18,7 @@ import { UploadMultipleFilesDto } from './dto/upload-multiple-files';
 import storage from './files.storage';
 import { createReadStream } from 'fs';
 import { join } from 'path';
+import { Response } from 'express';
 
 @ApiTags('Files')
 @Controller('files')
