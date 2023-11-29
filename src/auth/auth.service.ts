@@ -51,11 +51,22 @@ export class AuthService {
     if (!registerDto.password)
       throw new BadRequestException('Please provide password.');
 
+    const ref_user = registerDto.referral_code
+      ? await User.findOne({
+          where: {
+            referral_code: registerDto.referral_code,
+          },
+          paranoid: false,
+        })
+      : null;
+
     try {
       await User.create(
         {
           ...registerDto,
-          // username: await this.create_username(registerDto.last_name),
+          ...(ref_user && {
+            referred_by_id: ref_user.id,
+          }),
         },
         {
           fields: [
@@ -69,6 +80,8 @@ export class AuthService {
             'dob',
             'address',
             'registered_from',
+            'referral_code',
+            'referred_by_id',
           ],
         },
       );

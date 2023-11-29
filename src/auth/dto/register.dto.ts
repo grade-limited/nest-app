@@ -34,4 +34,7 @@ export class RegisterDto {
     enum: ['API', 'Website', 'Android', 'iOS'],
   })
   registered_from: string;
+
+  @ApiProperty()
+  referral_code?: string;
 }

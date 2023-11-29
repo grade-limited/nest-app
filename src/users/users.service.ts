@@ -41,6 +41,18 @@ export class UsersService {
           // ...filters,
           ...trash_query,
         },
+        include: [
+          {
+            association: 'referred_by',
+            attributes: [
+              'id',
+              'first_name',
+              'last_name',
+              'username',
+              'display_picture',
+            ],
+          },
+        ],
         order,
         limit,
         offset,

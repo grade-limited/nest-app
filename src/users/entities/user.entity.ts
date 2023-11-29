@@ -90,7 +90,7 @@ class User extends Model<User> {
   @Column
   'address': string;
 
-  @AllowNull
+  @Unique
   @Column
   'referral_code': string;
 
@@ -170,18 +170,22 @@ class User extends Model<User> {
       ref = nanoid(6).toUpperCase();
 
     instance.referral_code = ref;
+    console.log(instance.dataValues);
+  }
 
+  @BeforeCreate
+  static async createUsername(instance: User) {
     // Create Username
     let usename = `${instance.last_name
       .toLowerCase()
-      .replace(/\s/g, '')}${nanoid(2)}`;
+      .replace(/\s/g, '')}_${nanoid(2)}`;
 
     while (
       await this.findOne({ where: { username: usename }, paranoid: false })
     )
-      usename = `${instance.last_name.toLowerCase().replace(/\s/g, '')}${nanoid(
-        2,
-      )}`;
+      usename = `${instance.last_name
+        .toLowerCase()
+        .replace(/\s/g, '')}_${nanoid(2)}`;
 
     instance.username = usename;
   }
