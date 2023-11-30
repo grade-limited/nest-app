@@ -17,6 +17,7 @@ import {
   BeforeCreate,
   Unique,
   HasMany,
+  IsIn,
 } from 'sequelize-typescript';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
@@ -47,7 +48,11 @@ class Employee extends Model<Employee> {
   'password': string;
 
   @Default('Male')
-  @Column(DataType.ENUM('Male', 'Female', 'Non Binary'))
+  @IsIn({
+    args: [['Male', 'Female', 'Non Binary']],
+    msg: 'Must be Male, Female or Non Binary',
+  })
+  @Column
   'gender': string;
 
   @AllowNull

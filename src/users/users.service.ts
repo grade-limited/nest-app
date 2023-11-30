@@ -2,6 +2,8 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
@@ -9,9 +11,76 @@ import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import User from './entities/user.entity';
 import toBoolean from 'src/utils/conversion/toBoolean';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
+  async create(createUserDto: CreateUserDto) {
+    if (createUserDto.primary_contact === 'phone' && !createUserDto.phone)
+      throw new BadRequestException('Please provide phone number.');
+
+    if (createUserDto.primary_contact === 'email' && !createUserDto.email)
+      throw new BadRequestException('Please provide email address.');
+
+    if (!createUserDto.password)
+      throw new BadRequestException('Please provide password.');
+
+    const ref_user = createUserDto.referral_code
+      ? await User.findOne({
+          where: {
+            referral_code: createUserDto.referral_code,
+          },
+          paranoid: false,
+        })
+      : null;
+
+    try {
+      await User.create(
+        {
+          ...createUserDto,
+          ...(ref_user && {
+            referred_by_id: ref_user.id,
+          }),
+        },
+        {
+          fields: [
+            'first_name',
+            'last_name',
+            'username',
+            'password',
+            'gender',
+            'email',
+            'phone',
+            'dob',
+            'address',
+            'registered_from',
+            'referral_code',
+            'referred_by_id',
+          ],
+        },
+      );
+      // SEND OTP HERE
+      return {
+        message: `An OTP sent to ${
+          createUserDto.primary_contact === 'phone'
+            ? createUserDto.phone
+            : createUserDto.email
+        }. Please verify to continue.`,
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Failed to login user',
+        },
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: error,
+        },
+      );
+    }
+  }
+
   async findAll(query: IPaginationQuery) {
     const pagination = new Pagination(query);
 

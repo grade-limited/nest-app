@@ -36,7 +36,6 @@ export class RequestsService {
         contact_person_branch,
         contact_person_desk_information,
         contact_person_business_unit,
-        request_status,
       } = createRequestDto;
 
       await Request.create({
@@ -59,7 +58,6 @@ export class RequestsService {
         contact_person_branch,
         contact_person_desk_information,
         contact_person_business_unit,
-        request_status,
       });
       return {
         statusCode: 201,
@@ -123,53 +121,13 @@ export class RequestsService {
 
   async update(id: number, updateRequestDto: UpdateRequestDto) {
     try {
-      const {
-        organization_name,
-        business_type,
-        business_subtype,
-        contact_number,
-        contact_email,
-        contact_address,
-        website_url,
-        linkedin_url,
-        facebook_url,
-        instagram_url,
-        contact_person_name,
-        contact_person_phone,
-        contact_person_address,
-        contact_person_employee_id,
-        contact_person_dept,
-        contact_person_designation,
-        contact_person_branch,
-        contact_person_desk_information,
-        contact_person_business_unit,
-        request_status,
-      } = updateRequestDto;
+      const { request_status } = updateRequestDto;
 
       const request = await Request.findByPk(id);
       if (!request) {
         throw new NotFoundException('Organization not found');
       }
       await request.update({
-        organization_name,
-        business_type,
-        business_subtype,
-        contact_number,
-        contact_email,
-        contact_address,
-        website_url,
-        linkedin_url,
-        facebook_url,
-        instagram_url,
-        contact_person_name,
-        contact_person_phone,
-        contact_person_address,
-        contact_person_employee_id,
-        contact_person_dept,
-        contact_person_designation,
-        contact_person_branch,
-        contact_person_desk_information,
-        contact_person_business_unit,
         request_status,
       });
       return {

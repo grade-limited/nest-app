@@ -11,6 +11,7 @@ import {
   BelongsTo,
   ForeignKey,
   AllowNull,
+  IsIn,
 } from 'sequelize-typescript';
 import AccessPoint from 'src/accesspoint/entities/accesspoint.entity';
 import Role from 'src/roles/entities/role.entity';
@@ -24,7 +25,11 @@ class Permission extends Model<Permission> {
   @Column(DataType.BIGINT)
   'id': number;
 
-  @Column(DataType.ENUM('create', 'read', 'update', 'delete'))
+  @IsIn({
+    args: [['create', 'read', 'update', 'delete']],
+    msg: 'Please choose at least one permission',
+  })
+  @Column
   'type': string;
 
   @CreatedAt
