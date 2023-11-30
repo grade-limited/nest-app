@@ -12,6 +12,7 @@ import {
   ForeignKey,
   BelongsTo,
   NotEmpty,
+  IsUrl,
 } from 'sequelize-typescript';
 import Brand from 'src/brands/entities/brand.entity';
 import Category from 'src/categories/entities/category.entity';
@@ -37,6 +38,7 @@ class Product extends Model<Product> {
   'description': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'thumbnail_url': string;
 

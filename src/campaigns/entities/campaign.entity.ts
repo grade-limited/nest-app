@@ -77,7 +77,7 @@ class Campaign extends Model<Campaign> {
     args: [['amount', 'percentage']],
     msg: 'Must be amount or percentage',
   })
-  @Column
+  @Column(DataType.ENUM('amount', 'percentage'))
   'amount_type': string;
 
   @AllowNull(true)

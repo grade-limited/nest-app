@@ -46,9 +46,9 @@ class Organization extends Model<Organization> {
   @AllowNull(false)
   @IsIn({
     args: [['Retail Shop', 'Hotel/Restaurant', 'Corporate Company']],
-    msg: "business type can't be empty",
+    msg: 'Not a selectable business type',
   })
-  @Column
+  @Column(DataType.ENUM('Retail Shop', 'Hotel/Restaurant', 'Corporate Company'))
   'business_type': string;
 
   @AllowNull(false)

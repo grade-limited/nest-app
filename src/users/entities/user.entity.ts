@@ -63,14 +63,14 @@ class User extends Model<User> {
     args: [['Male', 'Female', 'Non Binary']],
     msg: 'Must be Male, Female or Non Binary',
   })
-  @Column
+  @Column(DataType.ENUM('Male', 'Female', 'Non Binary'))
   'gender': string;
 
   @AllowNull
   @Column
   'display_picture': string;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Unique
   @IsEmail
   @NotEmpty({
@@ -83,7 +83,7 @@ class User extends Model<User> {
   @NotEmpty({
     msg: 'Phone Number is required',
   })
-  @AllowNull(false)
+  @AllowNull(true)
   @Column
   'phone': string;
 
@@ -132,9 +132,9 @@ class User extends Model<User> {
   @AllowNull(false)
   @IsIn({
     args: [['API', 'Website', 'Android', 'iOS']],
-    msg: 'Please choose one froom the list',
+    msg: 'Please choose valid device',
   })
-  @Column
+  @Column(DataType.ENUM('API', 'Website', 'Android', 'iOS'))
   'registered_from': string;
 
   @HasMany(() => Session)

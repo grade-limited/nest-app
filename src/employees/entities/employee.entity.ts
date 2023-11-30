@@ -52,7 +52,7 @@ class Employee extends Model<Employee> {
     args: [['Male', 'Female', 'Non Binary']],
     msg: 'Must be Male, Female or Non Binary',
   })
-  @Column
+  @Column(DataType.ENUM('Male', 'Female', 'Non Binary'))
   'gender': string;
 
   @AllowNull

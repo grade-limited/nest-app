@@ -12,6 +12,9 @@ import {
   NotEmpty,
   Default,
   IsIn,
+  IsEmail,
+  Unique,
+  IsUrl,
 } from 'sequelize-typescript';
 
 @Table({
@@ -33,9 +36,9 @@ class Request extends Model<Request> {
   @AllowNull(false)
   @IsIn({
     args: [['Retail Shop', 'Hotel/Restaurant', 'Corporate Company']],
-    msg: "business type can't be empty",
+    msg: 'Not a selectable business type',
   })
-  @Column
+  @Column(DataType.ENUM('Retail Shop', 'Hotel/Restaurant', 'Corporate Company'))
   'business_type': string;
 
   @AllowNull(false)
@@ -43,6 +46,7 @@ class Request extends Model<Request> {
   'business_subtype': string;
 
   @AllowNull(false)
+  @Unique
   @NotEmpty({
     msg: "Contact can't be empty",
   })
@@ -50,6 +54,8 @@ class Request extends Model<Request> {
   'contact_number': string;
 
   @AllowNull(true)
+  @IsEmail
+  @Unique
   @NotEmpty({
     msg: "E-mail can't be empty",
   })
@@ -61,18 +67,22 @@ class Request extends Model<Request> {
   'contact_address': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'website_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'linkedin_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'facebook_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'instagram_url': string;
 
@@ -116,9 +126,9 @@ class Request extends Model<Request> {
   @Default('pending')
   @IsIn({
     args: [['pending', 'approved', 'in progress', 'declined']],
-    msg: 'Please choose one request status',
+    msg: 'Please choose valid request status',
   })
-  @Column
+  @Column(DataType.ENUM('pending', 'approved', 'in progress', 'declined'))
   'request_status': string;
 
   @CreatedAt
