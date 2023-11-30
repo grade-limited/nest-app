@@ -14,6 +14,7 @@ import {
   NotEmpty,
   Default,
   IsIn,
+  IsUrl,
 } from 'sequelize-typescript';
 
 @Table({
@@ -37,14 +38,17 @@ class Campaign extends Model<Campaign> {
   'description': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'cover_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'thumbnail_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'website_url': string;
 

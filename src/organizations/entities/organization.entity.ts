@@ -11,6 +11,9 @@ import {
   DeletedAt,
   NotEmpty,
   IsIn,
+  IsEmail,
+  IsUrl,
+  Unique,
 } from 'sequelize-typescript';
 
 @Table({
@@ -37,6 +40,8 @@ class Organization extends Model<Organization> {
   'contact_number': string;
 
   @AllowNull(false)
+  @Unique
+  @IsEmail
   @NotEmpty({
     msg: "E-mail can't be empty",
   })
@@ -56,18 +61,22 @@ class Organization extends Model<Organization> {
   'business_subtype': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'website_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'linkedin_url': string;
 
   @AllowNull
+  @IsUrl
   @Column
   'facebook_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'instagram_url': string;
 

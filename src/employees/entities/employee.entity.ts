@@ -60,6 +60,7 @@ class Employee extends Model<Employee> {
   'display_picture': string;
 
   @AllowNull
+  @Unique
   @IsEmail
   @Column
   'email': string;
