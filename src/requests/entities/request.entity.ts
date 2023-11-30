@@ -11,6 +11,7 @@ import {
   DeletedAt,
   NotEmpty,
   Default,
+  IsIn,
 } from 'sequelize-typescript';
 
 @Table({
@@ -30,7 +31,11 @@ class Request extends Model<Request> {
   'organization_name': string;
 
   @AllowNull(false)
-  @Column(DataType.ENUM('Retail Shop', 'Hotel/Restaurant', 'Corporate Company'))
+  @IsIn({
+    args: [['Retail Shop', 'Hotel/Restaurant', 'Corporate Company']],
+    msg: "business type can't be empty",
+  })
+  @Column
   'business_type': string;
 
   @AllowNull(false)
@@ -109,7 +114,11 @@ class Request extends Model<Request> {
 
   @AllowNull(true)
   @Default('pending')
-  @Column(DataType.ENUM('pending', 'approved', 'in progress', 'declined'))
+  @IsIn({
+    args: [['pending', 'approved', 'in progress', 'declined']],
+    msg: 'Please choose one request status',
+  })
+  @Column
   'request_status': string;
 
   @CreatedAt

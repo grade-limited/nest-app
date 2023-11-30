@@ -19,6 +19,7 @@ import {
   ForeignKey,
   BelongsTo,
   NotEmpty,
+  IsIn,
 } from 'sequelize-typescript';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
@@ -58,7 +59,11 @@ class User extends Model<User> {
   @Column
   'password': string;
 
-  @Column(DataType.ENUM('Male', 'Female', 'Non Binary'))
+  @IsIn({
+    args: [['Male', 'Female', 'Non Binary']],
+    msg: 'Must be Male, Female or Non Binary',
+  })
+  @Column
   'gender': string;
 
   @AllowNull
@@ -125,7 +130,11 @@ class User extends Model<User> {
   'email_verified_at': Date;
 
   @AllowNull(false)
-  @Column(DataType.ENUM('API', 'Website', 'Android', 'iOS'))
+  @IsIn({
+    args: [['API', 'Website', 'Android', 'iOS']],
+    msg: 'Please choose one froom the list',
+  })
+  @Column
   'registered_from': string;
 
   @HasMany(() => Session)

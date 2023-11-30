@@ -13,6 +13,7 @@ import {
   BelongsTo,
   NotEmpty,
   Default,
+  IsIn,
 } from 'sequelize-typescript';
 
 @Table({
@@ -72,7 +73,11 @@ class Campaign extends Model<Campaign> {
   'amount': number;
 
   @AllowNull(false)
-  @Column(DataType.ENUM('amount', 'percentage'))
+  @IsIn({
+    args: [['amount', 'percentage']],
+    msg: 'Must be amount or percentage',
+  })
+  @Column
   'amount_type': string;
 
   @AllowNull(true)

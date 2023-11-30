@@ -10,6 +10,7 @@ import {
   UpdatedAt,
   DeletedAt,
   NotEmpty,
+  IsIn,
 } from 'sequelize-typescript';
 
 @Table({
@@ -43,7 +44,11 @@ class Organization extends Model<Organization> {
   'contact_email': string;
 
   @AllowNull(false)
-  @Column(DataType.ENUM('Retail Shop', 'Hotel/Restaurant', 'Corporate Company'))
+  @IsIn({
+    args: [['Retail Shop', 'Hotel/Restaurant', 'Corporate Company']],
+    msg: "business type can't be empty",
+  })
+  @Column
   'business_type': string;
 
   @AllowNull(false)
