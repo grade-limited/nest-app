@@ -61,17 +61,17 @@ export class UsersService {
       );
       // SEND OTP HERE
       return {
-        message: `An OTP sent to ${
+        message: `A user created with ${
           createUserDto.primary_contact === 'phone'
             ? createUserDto.phone
             : createUserDto.email
-        }. Please verify to continue.`,
+        }.`,
       };
     } catch (error) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Failed to login user',
+          error: 'Failed to create user',
         },
         HttpStatus.BAD_REQUEST,
         {
