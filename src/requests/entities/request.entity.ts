@@ -10,6 +10,7 @@ import {
   UpdatedAt,
   DeletedAt,
   NotEmpty,
+  Default,
 } from 'sequelize-typescript';
 
 @Table({
@@ -107,6 +108,7 @@ class Request extends Model<Request> {
   'contact_person_business_unit': string;
 
   @AllowNull(true)
+  @Default('pending')
   @Column(DataType.ENUM('pending', 'approved', 'in progress', 'declined'))
   'request_status': string;
 

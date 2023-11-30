@@ -76,9 +76,4 @@ export class CreateRequestDto {
 
   @ApiProperty()
   contact_person_business_unit?: string;
-
-  @ApiProperty({
-    enum: ['pending', 'approved', 'in progress', 'declined'],
-  })
-  request_status?: string;
 }
