@@ -18,6 +18,7 @@ import {
   Unique,
   HasMany,
   IsIn,
+  Is,
 } from 'sequelize-typescript';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
@@ -65,6 +66,7 @@ class Employee extends Model<Employee> {
   @Column
   'email': string;
 
+  @Is([/01\d{9}$/])
   @Unique
   @Column
   'phone': string;

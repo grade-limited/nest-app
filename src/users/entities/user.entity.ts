@@ -20,6 +20,7 @@ import {
   BelongsTo,
   NotEmpty,
   IsIn,
+  Is,
 } from 'sequelize-typescript';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
@@ -79,6 +80,7 @@ class User extends Model<User> {
   @Column
   'email': string;
 
+  @Is([/01\d{9}$/])
   @Unique
   @NotEmpty({
     msg: 'Phone Number is required',
@@ -179,7 +181,6 @@ class User extends Model<User> {
       ref = nanoid(6).toUpperCase();
 
     instance.referral_code = ref;
-    console.log(instance.dataValues);
   }
 
   @BeforeCreate

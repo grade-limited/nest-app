@@ -15,6 +15,7 @@ import {
   IsEmail,
   Unique,
   IsUrl,
+  Is,
 } from 'sequelize-typescript';
 
 @Table({
@@ -45,6 +46,7 @@ class Request extends Model<Request> {
   @Column
   'business_subtype': string;
 
+  @Is([/01\d{9}$/])
   @AllowNull(false)
   @Unique
   @NotEmpty({
@@ -90,6 +92,7 @@ class Request extends Model<Request> {
   @Column
   'contact_person_name': string;
 
+  @Is([/01\d{9}$/])
   @AllowNull(false)
   @Column
   'contact_person_phone': string;
