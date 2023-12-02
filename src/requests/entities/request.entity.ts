@@ -80,7 +80,19 @@ class Request extends Model<Request> {
 
   @AllowNull(true)
   @IsUrl
-  @Column
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      isFacebookUrl(value: string): void {
+        const facebookUrlRegex =
+          /^(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/;
+        if (!facebookUrlRegex.test(value)) {
+          throw new Error('Invalid Facebook URL');
+        }
+      },
+    },
+  })
   'facebook_url': string;
 
   @AllowNull(true)

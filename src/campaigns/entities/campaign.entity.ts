@@ -48,11 +48,6 @@ class Campaign extends Model<Campaign> {
   'thumbnail_url': string;
 
   @AllowNull(true)
-  @IsUrl
-  @Column
-  'website_url': string;
-
-  @AllowNull(true)
   @Default(true)
   @Column
   'is_active': boolean;
