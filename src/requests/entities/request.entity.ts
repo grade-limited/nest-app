@@ -12,6 +12,10 @@ import {
   NotEmpty,
   Default,
   IsIn,
+  IsEmail,
+  Unique,
+  IsUrl,
+  Is,
 } from 'sequelize-typescript';
 
 @Table({
@@ -33,16 +37,18 @@ class Request extends Model<Request> {
   @AllowNull(false)
   @IsIn({
     args: [['Retail Shop', 'Hotel/Restaurant', 'Corporate Company']],
-    msg: "business type can't be empty",
+    msg: 'Not a selectable business type',
   })
-  @Column
+  @Column(DataType.ENUM('Retail Shop', 'Hotel/Restaurant', 'Corporate Company'))
   'business_type': string;
 
   @AllowNull(false)
   @Column
   'business_subtype': string;
 
+  @Is([/01\d{9}$/])
   @AllowNull(false)
+  @Unique
   @NotEmpty({
     msg: "Contact can't be empty",
   })
@@ -50,6 +56,8 @@ class Request extends Model<Request> {
   'contact_number': string;
 
   @AllowNull(true)
+  @IsEmail
+  @Unique
   @NotEmpty({
     msg: "E-mail can't be empty",
   })
@@ -61,18 +69,47 @@ class Request extends Model<Request> {
   'contact_address': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'website_url': string;
 
   @AllowNull(true)
-  @Column
+  @IsUrl
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      isLinkedInUrl(value: string): void {
+        const linkedInUrlRegex =
+          /^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile)\/([-a-zA-Z0-9]+)\/*/;
+
+        if (!linkedInUrlRegex.test(value)) {
+          throw new Error('Invalid LinkedIn Profile URL');
+        }
+      },
+    },
+  })
   'linkedin_url': string;
 
   @AllowNull(true)
-  @Column
+  @IsUrl
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      isFacebookUrl(value: string): void {
+        const facebookUrlRegex =
+          /^(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/;
+        if (!facebookUrlRegex.test(value)) {
+          throw new Error('Invalid Facebook URL');
+        }
+      },
+    },
+  })
   'facebook_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'instagram_url': string;
 
@@ -80,6 +117,7 @@ class Request extends Model<Request> {
   @Column
   'contact_person_name': string;
 
+  @Is([/01\d{9}$/])
   @AllowNull(false)
   @Column
   'contact_person_phone': string;
@@ -116,9 +154,9 @@ class Request extends Model<Request> {
   @Default('pending')
   @IsIn({
     args: [['pending', 'approved', 'in progress', 'declined']],
-    msg: 'Please choose one request status',
+    msg: 'Please choose valid request status',
   })
-  @Column
+  @Column(DataType.ENUM('pending', 'approved', 'in progress', 'declined'))
   'request_status': string;
 
   @CreatedAt

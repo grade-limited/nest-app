@@ -20,6 +20,7 @@ import {
   BelongsTo,
   NotEmpty,
   IsIn,
+  Is,
 } from 'sequelize-typescript';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
@@ -63,14 +64,14 @@ class User extends Model<User> {
     args: [['Male', 'Female', 'Non Binary']],
     msg: 'Must be Male, Female or Non Binary',
   })
-  @Column
+  @Column(DataType.ENUM('Male', 'Female', 'Non Binary'))
   'gender': string;
 
   @AllowNull
   @Column
   'display_picture': string;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Unique
   @IsEmail
   @NotEmpty({
@@ -79,11 +80,12 @@ class User extends Model<User> {
   @Column
   'email': string;
 
+  @Is([/01\d{9}$/])
   @Unique
   @NotEmpty({
     msg: 'Phone Number is required',
   })
-  @AllowNull(false)
+  @AllowNull(true)
   @Column
   'phone': string;
 
@@ -132,9 +134,9 @@ class User extends Model<User> {
   @AllowNull(false)
   @IsIn({
     args: [['API', 'Website', 'Android', 'iOS']],
-    msg: 'Please choose one froom the list',
+    msg: 'Please choose valid device',
   })
-  @Column
+  @Column(DataType.ENUM('API', 'Website', 'Android', 'iOS'))
   'registered_from': string;
 
   @HasMany(() => Session)
@@ -179,7 +181,6 @@ class User extends Model<User> {
       ref = nanoid(6).toUpperCase();
 
     instance.referral_code = ref;
-    console.log(instance.dataValues);
   }
 
   @BeforeCreate

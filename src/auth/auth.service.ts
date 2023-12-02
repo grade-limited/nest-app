@@ -94,15 +94,8 @@ export class AuthService {
         }. Please verify to continue.`,
       };
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Failed to create user',
-        },
-        HttpStatus.BAD_REQUEST,
-        {
-          cause: error,
-        },
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
       );
     }
   }

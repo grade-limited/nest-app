@@ -18,6 +18,7 @@ import {
   Unique,
   HasMany,
   IsIn,
+  Is,
 } from 'sequelize-typescript';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
@@ -52,7 +53,7 @@ class Employee extends Model<Employee> {
     args: [['Male', 'Female', 'Non Binary']],
     msg: 'Must be Male, Female or Non Binary',
   })
-  @Column
+  @Column(DataType.ENUM('Male', 'Female', 'Non Binary'))
   'gender': string;
 
   @AllowNull
@@ -60,10 +61,12 @@ class Employee extends Model<Employee> {
   'display_picture': string;
 
   @AllowNull
+  @Unique
   @IsEmail
   @Column
   'email': string;
 
+  @Is([/01\d{9}$/])
   @Unique
   @Column
   'phone': string;

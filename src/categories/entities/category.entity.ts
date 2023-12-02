@@ -13,6 +13,7 @@ import {
   PrimaryKey,
   Table,
   NotEmpty,
+  IsUrl,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 
@@ -35,12 +36,15 @@ class Category extends Model<Category> {
   @Column
   'description': string;
 
+  @IsUrl
   @Column
   'thumbnail_url': string;
 
+  @IsUrl
   @Column
   'cover_url': string;
 
+  @IsUrl
   @Column
   'icon_url': string;
 

@@ -1,3 +1,4 @@
+import { HttpStatus } from '@nestjs/common';
 import {
   Model,
   Table,
@@ -11,6 +12,9 @@ import {
   DeletedAt,
   NotEmpty,
   IsIn,
+  IsEmail,
+  IsUrl,
+  Unique,
 } from 'sequelize-typescript';
 
 @Table({
@@ -37,6 +41,8 @@ class Organization extends Model<Organization> {
   'contact_number': string;
 
   @AllowNull(false)
+  @Unique
+  @IsEmail
   @NotEmpty({
     msg: "E-mail can't be empty",
   })
@@ -46,9 +52,9 @@ class Organization extends Model<Organization> {
   @AllowNull(false)
   @IsIn({
     args: [['Retail Shop', 'Hotel/Restaurant', 'Corporate Company']],
-    msg: "business type can't be empty",
+    msg: 'Not a selectable business type',
   })
-  @Column
+  @Column(DataType.ENUM('Retail Shop', 'Hotel/Restaurant', 'Corporate Company'))
   'business_type': string;
 
   @AllowNull(false)
@@ -56,18 +62,47 @@ class Organization extends Model<Organization> {
   'business_subtype': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'website_url': string;
 
   @AllowNull(true)
-  @Column
+  @IsUrl
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      isLinkedInUrl(value: string): void {
+        const linkedInUrlRegex =
+          /^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile)\/([-a-zA-Z0-9]+)\/*/;
+
+        if (!linkedInUrlRegex.test(value)) {
+          throw new Error('Invalid LinkedIn Profile URL');
+        }
+      },
+    },
+  })
   'linkedin_url': string;
 
   @AllowNull
-  @Column
+  //@IsUrl
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      isFacebookUrl(value: string): void {
+        const facebookUrlRegex =
+          /^(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/;
+        if (!facebookUrlRegex.test(value)) {
+          throw new Error('Invalid Facebook URL');
+        }
+      },
+    },
+  })
   'facebook_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'instagram_url': string;
 

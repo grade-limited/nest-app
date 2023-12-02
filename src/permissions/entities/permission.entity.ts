@@ -27,9 +27,9 @@ class Permission extends Model<Permission> {
 
   @IsIn({
     args: [['create', 'read', 'update', 'delete']],
-    msg: 'Please choose at least one permission',
+    msg: 'This permission type is not selectable',
   })
-  @Column
+  @Column(DataType.ENUM('create', 'read', 'update', 'delete'))
   'type': string;
 
   @CreatedAt

@@ -14,6 +14,7 @@ import {
   NotEmpty,
   Default,
   IsIn,
+  IsUrl,
 } from 'sequelize-typescript';
 
 @Table({
@@ -37,16 +38,14 @@ class Campaign extends Model<Campaign> {
   'description': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'cover_url': string;
 
   @AllowNull(true)
+  @IsUrl
   @Column
   'thumbnail_url': string;
-
-  @AllowNull(true)
-  @Column
-  'website_url': string;
 
   @AllowNull(true)
   @Default(true)
@@ -77,7 +76,7 @@ class Campaign extends Model<Campaign> {
     args: [['amount', 'percentage']],
     msg: 'Must be amount or percentage',
   })
-  @Column
+  @Column(DataType.ENUM('amount', 'percentage'))
   'amount_type': string;
 
   @AllowNull(true)
