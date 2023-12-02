@@ -68,7 +68,20 @@ class Organization extends Model<Organization> {
 
   @AllowNull(true)
   @IsUrl
-  @Column
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      isLinkedInUrl(value: string): void {
+        const linkedInUrlRegex =
+          /^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile)\/([-a-zA-Z0-9]+)\/*/;
+
+        if (!linkedInUrlRegex.test(value)) {
+          throw new Error('Invalid LinkedIn Profile URL');
+        }
+      },
+    },
+  })
   'linkedin_url': string;
 
   @AllowNull
