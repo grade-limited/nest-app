@@ -12,8 +12,9 @@ import {
   NotEmpty,
   Default,
   IsIn,
-  IsUrl,
+  HasMany,
 } from 'sequelize-typescript';
+import Product from 'src/products/entities/product.entity';
 
 @Table({
   tableName: 'campaign',
@@ -78,6 +79,9 @@ class Campaign extends Model<Campaign> {
   @AllowNull(true)
   @Column
   'campaign_type': string;
+
+  @HasMany(() => Product)
+  'products': Product[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

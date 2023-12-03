@@ -12,9 +12,10 @@ import {
   ForeignKey,
   BelongsTo,
   NotEmpty,
-  IsUrl,
+  HasMany,
 } from 'sequelize-typescript';
 import Brand from 'src/brands/entities/brand.entity';
+import Campaign from 'src/campaigns/entities/campaign.entity';
 import Category from 'src/categories/entities/category.entity';
 
 @Table({
@@ -65,6 +66,9 @@ class Product extends Model<Product> {
 
   @BelongsTo(() => Category)
   'category': Category;
+
+  @HasMany(() => Campaign)
+  'campaigns': Campaign[];
 
   @CreatedAt
   @Column({ field: 'created_at' })
