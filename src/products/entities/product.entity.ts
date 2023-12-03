@@ -41,7 +41,7 @@ class Product extends Model<Product> {
   @Column
   'thumbnail_url': string;
 
-  @AllowNull(false)
+  @AllowNull
   @Column({
     type: DataType.ARRAY(DataType.STRING),
     get: function () {
