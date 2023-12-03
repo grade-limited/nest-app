@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import { CampaignsService } from './campaigns.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
@@ -63,6 +64,31 @@ export class CampaignsController {
     @Body() updateCampaignDto: UpdateCampaignDto,
   ) {
     return this.campaignsService.update(+id, updateCampaignDto);
+  }
+
+  @Put(':id')
+  @ApiQuery({
+    name: 'products',
+    type: 'number',
+    isArray: true,
+    required: true,
+  })
+  @ApiQuery({
+    name: 'action',
+    type: 'string',
+    enum: ['add', 'remove'],
+    required: true,
+  })
+  addOrRemoveProducts(
+    @Param('id') id: string,
+    @Query('products') products: string[],
+    @Query('action') action: string,
+  ) {
+    return this.campaignsService.addOrRemoveProducts(
+      +id,
+      products.map((product) => +product),
+      action,
+    );
   }
 
   @Delete(':id')

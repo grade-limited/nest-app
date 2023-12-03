@@ -46,6 +46,11 @@ export class ProductsController {
     type: 'number',
     required: false,
   })
+  @ApiQuery({
+    name: 'campaign_id',
+    type: 'number',
+    required: false,
+  })
   @ApiQuery(TrashQuery)
   @ApiQuery(ShowParanoidQuery)
   @ApiQuery(SortQuery)
@@ -56,8 +61,14 @@ export class ProductsController {
     @Query() query: IPaginationQuery,
     @Query('brand_id') brand_id?: number,
     @Query('category_id') category_id?: number,
+    @Query('campaign_id') campaign_id?: number,
   ) {
-    return this.productsService.findAll(query, brand_id, category_id);
+    return this.productsService.findAll(
+      query,
+      brand_id,
+      category_id,
+      campaign_id,
+    );
   }
 
   @Get(':id')

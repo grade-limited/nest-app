@@ -40,6 +40,7 @@ export class ProductsService {
     query: IPaginationQuery,
     brand_id?: number,
     category_id?: number,
+    campaign_id?: number,
   ) {
     const pagination = new Pagination(query);
 
@@ -66,6 +67,14 @@ export class ProductsService {
           {
             association: 'category',
             //attributes: ['id', 'name', 'description'],
+          },
+          {
+            association: 'campaigns',
+            ...(!!campaign_id && {
+              where: {
+                id: campaign_id,
+              },
+            }),
           },
         ],
         order,
