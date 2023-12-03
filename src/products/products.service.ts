@@ -106,8 +106,14 @@ export class ProductsService {
 
   async update(id: number, updateProductDto: UpdateProductDto) {
     try {
-      const { name, description, brand_id, thumbnail_url, category_id } =
-        updateProductDto;
+      const {
+        name,
+        description,
+        brand_id,
+        thumbnail_url,
+        category_id,
+        attachments,
+      } = updateProductDto;
 
       const product = await Product.findByPk(id);
       if (!product) {
@@ -119,6 +125,7 @@ export class ProductsService {
         brand_id,
         category_id,
         thumbnail_url,
+        attachments,
       });
       return {
         message: 'Product updated successfully',

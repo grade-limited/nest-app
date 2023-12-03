@@ -16,4 +16,7 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
 
   @ApiProperty()
   'brand_id': number;
+
+  @ApiProperty()
+  'attachments': string[];
 }

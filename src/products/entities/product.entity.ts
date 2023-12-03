@@ -42,6 +42,15 @@ class Product extends Model<Product> {
   @Column
   'thumbnail_url': string;
 
+  @AllowNull(false)
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    get: function () {
+      return JSON.parse(this.getDataValue('attachments') || '[]');
+    },
+  })
+  'attachments': string[];
+
   @ForeignKey(() => Brand)
   @AllowNull
   @Column(DataType.BIGINT)

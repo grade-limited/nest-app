@@ -24,4 +24,7 @@ export class CreateProductDto {
     required: false,
   })
   'brand_id': number;
+
+  @ApiProperty()
+  'attachments'?: string[];
 }
