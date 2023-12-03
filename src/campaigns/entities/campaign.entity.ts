@@ -9,8 +9,6 @@ import {
   CreatedAt,
   UpdatedAt,
   DeletedAt,
-  ForeignKey,
-  BelongsTo,
   NotEmpty,
   Default,
   IsIn,

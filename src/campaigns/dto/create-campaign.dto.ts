@@ -13,9 +13,6 @@ export class CreateCampaignDto {
   thumbnail_url?: string;
 
   @ApiProperty()
-  website_url?: string;
-
-  @ApiProperty()
   is_active?: boolean;
 
   @ApiProperty()
