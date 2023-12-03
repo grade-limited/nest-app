@@ -143,6 +143,26 @@ export class CampaignsService {
     }
   }
 
+  async addOrRemoveProducts(id: number, products: number[], action: string) {
+    const campaign = await Campaign.findByPk(id);
+
+    if (!campaign) {
+      throw new NotFoundException('Campaign not found');
+    }
+
+    if (!action || !['add', 'remove'].includes(action)) {
+      throw new BadRequestException('Invalid action');
+    }
+
+    if (action === 'add') {
+      await campaign.$add('products', products);
+    } else {
+      await campaign.$remove('products', products, {
+        force: true,
+      });
+    }
+  }
+
   async remove(id: number, permanent?: boolean, restore?: boolean) {
     const campaign = await Campaign.findByPk(id, {
       paranoid: false,
