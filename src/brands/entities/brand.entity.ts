@@ -35,12 +35,10 @@ class Brand extends Model<Brand> {
   'description': string;
 
   @AllowNull(true)
-  @IsUrl
   @Column
   'thumbnail_url': string;
 
   @AllowNull(true)
-  @IsUrl
   @Column
   'cover_url': string;
 

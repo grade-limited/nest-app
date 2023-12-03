@@ -38,7 +38,6 @@ class Product extends Model<Product> {
   'description': string;
 
   @AllowNull(true)
-  @IsUrl
   @Column
   'thumbnail_url': string;
 

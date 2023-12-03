@@ -36,15 +36,12 @@ class Category extends Model<Category> {
   @Column
   'description': string;
 
-  @IsUrl
   @Column
   'thumbnail_url': string;
 
-  @IsUrl
   @Column
   'cover_url': string;
 
-  @IsUrl
   @Column
   'icon_url': string;
 
