@@ -19,6 +19,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { FilesModule } from './files/files.module';
 import { RequestsModule } from './requests/requests.module';
 import { CampaignsModule } from './campaigns/campaigns.module';
+import { EmployeeshipsModule } from './employeeships/employeeships.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { CampaignsModule } from './campaigns/campaigns.module';
     FilesModule,
     RequestsModule,
     CampaignsModule,
+    EmployeeshipsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
