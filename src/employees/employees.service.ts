@@ -48,6 +48,7 @@ export class EmployeesService {
             'email',
             'phone',
             'dob',
+            'display_picture',
             'address',
             'max_session',
             'role_id',
@@ -156,6 +157,7 @@ export class EmployeesService {
         role_id,
         address,
         max_session,
+        display_picture,
       } = updateEmployeeDto;
 
       const employee = await Employee.findByPk(id, {});
@@ -173,6 +175,7 @@ export class EmployeesService {
         role_id,
         address,
         max_session,
+        display_picture,
       });
 
       return {
