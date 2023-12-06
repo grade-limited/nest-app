@@ -13,9 +13,9 @@ import {
   PrimaryKey,
   Table,
   NotEmpty,
-  IsUrl,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
+// import Hierarchy from 'sequelize-hierarchy-nestjs';
 
 @Table({
   tableName: 'category',
