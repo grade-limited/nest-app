@@ -1,50 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { Op } from 'sequelize';
-import { Sequelize } from 'sequelize-typescript';
+import { Includeable, Op } from 'sequelize';
+// import { Sequelize } from 'sequelize-typescript';
 import Category from 'src/categories/entities/category.entity';
-import Pagination from 'src/utils/Pagination';
+// import Pagination from 'src/utils/Pagination';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 
 @Injectable()
 export class SearchService {
-  async getCategory(query: IPaginationQuery) {
-    const pagination = new Pagination(query);
-
-    const { limit, offset, paranoid, trash_query, order, search_string } =
-      pagination.get_attributes();
-
-    const search_ops = pagination.get_search_ops(['name']);
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getCategory(_query: IPaginationQuery) {
+    // const pagination = new Pagination(query);
+    // // const { limit, offset, paranoid, trash_query, order } =
+    // //   pagination.get_attributes();
+    // const search_ops = pagination.get_search_ops(['name']);
     return await Category.findAll({
+      // where: {
+      //   name: Sequelize.where(
+      //     Sequelize.fn('LOWER', Sequelize.col('name')),
+      //     'LIKE',
+      //     `%${pagination.search_string.toLowerCase()}%`,
+      //   ),
+      // },
       where: {
-        name: Sequelize.where(
-          Sequelize.fn('LOWER', Sequelize.col('name')),
-          'LIKE',
-          `%${search_string.toLowerCase()}%`,
-        ),
-      },
-      include: [
-        {
-          model: Category,
-          as: 'children',
-          hierarchy: true,
+        // [Op.or]: search_ops,
+        parent_id: {
+          [Op.eq]: null,
         },
-      ],
-      hierarchy: true,
+      },
+      include: this.decorate_include(20, []),
+      // include: this.decorate_include(10),
+      attributes: ['id', 'name', 'icon_url'],
     });
   }
 
-  private mapCategoryToResult(category: Category): any {
-    const result: any = { name: category.name };
-
-    if (category.children && category.children.length > 0) {
-      result.children = category.children.map((child) =>
-        this.mapCategoryToResult(child),
-      );
-    } else {
-      result.children = [];
+  private decorate_include(more: number, prev?: Includeable[]) {
+    if (more === 0) {
+      return prev;
     }
-
-    return result;
+    return this.decorate_include(more - 1, [
+      {
+        model: Category,
+        as: 'children',
+        attributes: ['id', 'name', 'icon_url'],
+        include: prev,
+      },
+    ]);
   }
 }
