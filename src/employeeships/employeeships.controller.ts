@@ -60,7 +60,7 @@ export class EmployeeshipsController {
     @Query() query: IPaginationQuery,
     @Query('user_id') user_id?: number,
     @Query('organization_id') organization_id?: number,
-    @Query('employeeship_status') employeeship_status?: number,
+    @Query('employeeship_status') employeeship_status?: string,
   ) {
     return this.employeeshipsService.findAll(
       query,

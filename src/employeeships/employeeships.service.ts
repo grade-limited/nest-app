@@ -21,7 +21,16 @@ export class EmployeeshipsService {
           ...createEmployeeshipDto,
         },
         {
-          fields: ['user_id', 'organization_id', 'employeeship_status'],
+          fields: [
+            'user_id',
+            'organization_id',
+            'employeeship_status',
+            'employee_id',
+            'depertment',
+            'designation',
+            'desk_info',
+            'business_unit',
+          ],
         },
       );
       return {
@@ -79,7 +88,7 @@ export class EmployeeshipsService {
     const employeeship = await Employeeship.findByPk(id, {});
 
     if (!employeeship) {
-      throw new NotFoundException(`employeeship not found`);
+      throw new NotFoundException(`Employeeship not found`);
     }
 
     return {
@@ -102,7 +111,7 @@ export class EmployeeshipsService {
 
       const employeeship = await Employeeship.findByPk(id, {});
 
-      if (!employeeship) throw new NotFoundException(`employeeship not found`);
+      if (!employeeship) throw new NotFoundException(`Employeeship not found`);
 
       await employeeship.update({
         employee_id,
@@ -137,28 +146,28 @@ export class EmployeeshipsService {
     });
 
     if (!employeeship) {
-      throw new NotFoundException(`employeeship not found`);
+      throw new NotFoundException(`Employeeship not found`);
     }
 
     if (toBoolean(permanent)) {
       await employeeship.destroy({ force: true });
       return {
-        message: 'employeeshipProduct deleted permanently',
+        message: 'Employeeship is deleted permanently',
       };
     } else if (toBoolean(restore)) {
       if (employeeship.deleted_at === null) {
-        throw new BadRequestException(`employeeship not deleted`);
+        throw new BadRequestException(`Employeeship is not deleted`);
       }
       employeeship.restore();
       return {
-        message: 'Product restored successfully',
+        message: 'Employeeship is restored successfully',
       };
     }
 
     await employeeship.destroy();
 
     return {
-      message: 'employeeship deleted successfully',
+      message: 'Employeeship deleted successfully',
     };
   }
 }
