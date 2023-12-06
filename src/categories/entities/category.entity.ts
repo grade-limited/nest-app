@@ -13,7 +13,6 @@ import {
   PrimaryKey,
   Table,
   NotEmpty,
-  IsUrl,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 
