@@ -74,17 +74,11 @@ class User extends Model<User> {
   @AllowNull(true)
   @Unique
   @IsEmail
-  @NotEmpty({
-    msg: 'Email is required',
-  })
   @Column
   'email': string;
 
   @Is([/01\d{9}$/])
   @Unique
-  @NotEmpty({
-    msg: 'Phone Number is required',
-  })
   @AllowNull(true)
   @Column
   'phone': string;
