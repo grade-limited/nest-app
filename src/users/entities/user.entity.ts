@@ -10,7 +10,6 @@ import {
   UpdatedAt,
   DeletedAt,
   AllowNull,
-  IsEmail,
   Default,
   BeforeUpdate,
   BeforeCreate,
