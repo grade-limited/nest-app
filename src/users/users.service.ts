@@ -68,15 +68,8 @@ export class UsersService {
         }.`,
       };
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Failed to create user',
-        },
-        HttpStatus.BAD_REQUEST,
-        {
-          cause: error,
-        },
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
       );
     }
   }
@@ -152,39 +145,45 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const {
-      first_name,
-      last_name,
-      gender,
-      dob,
-      address,
-      phone,
-      email,
-      display_picture,
-      max_session,
-    } = updateUserDto;
+    try {
+      const {
+        first_name,
+        last_name,
+        gender,
+        dob,
+        address,
+        phone,
+        email,
+        display_picture,
+        max_session,
+      } = updateUserDto;
 
-    const user = await User.findByPk(id, {});
+      const user = await User.findByPk(id, {});
 
-    if (!user) {
-      throw new NotFoundException(`User not found`);
+      if (!user) {
+        throw new NotFoundException(`User not found`);
+      }
+
+      await user.update({
+        first_name,
+        last_name,
+        gender,
+        dob,
+        address,
+        phone,
+        email,
+        display_picture,
+        max_session,
+      });
+
+      return {
+        message: 'Information updated successfully',
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        error?.errors?.[0]?.message || error?.message || error,
+      );
     }
-
-    await user.update({
-      first_name,
-      last_name,
-      gender,
-      dob,
-      address,
-      phone,
-      email,
-      display_picture,
-      max_session,
-    });
-
-    return {
-      message: 'Information updated successfully',
-    };
   }
 
   public async activeInactive(id: number) {
