@@ -10,7 +10,6 @@ import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import toBoolean from 'src/utils/conversion/toBoolean';
-import { request } from 'http';
 
 @Injectable()
 export class RequestsService {
