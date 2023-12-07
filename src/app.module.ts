@@ -21,6 +21,7 @@ import { RequestsModule } from './requests/requests.module';
 import { CampaignsModule } from './campaigns/campaigns.module';
 import { SearchModule } from './search/search.module';
 import { EmployeeshipsModule } from './employeeships/employeeships.module';
+import { ShopModule } from './shop/shop.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { EmployeeshipsModule } from './employeeships/employeeships.module';
     CampaignsModule,
     SearchModule,
     EmployeeshipsModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [AppService],
