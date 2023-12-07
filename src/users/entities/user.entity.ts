@@ -71,15 +71,15 @@ class User extends Model<User> {
   @Column
   'display_picture': string;
 
-  @AllowNull(true)
   @Unique
-  @IsEmail
+  @AllowNull(true)
+  // @Is([/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/])
   @Column
   'email': string;
 
-  @Is([/01\d{9}$/])
   @Unique
   @AllowNull(true)
+  @Is([/01\d{9}$/])
   @Column
   'phone': string;
 
@@ -192,6 +192,19 @@ class User extends Model<User> {
         .replace(/\s/g, '')}_${nanoid(2)}`;
 
     instance.username = usename;
+  }
+
+  @BeforeCreate
+  @BeforeUpdate
+  static async phoneAndEmailValidation(instance: User) {
+    if (instance.changed('phone')) {
+      if (instance.phone === '') instance.phone = null;
+      instance.phone_verified_at = null;
+    }
+    if (instance.changed('email')) {
+      if (instance.email === '') instance.email = null;
+      instance.email_verified_at = null;
+    }
   }
 }
 
