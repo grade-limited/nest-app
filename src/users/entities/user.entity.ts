@@ -24,6 +24,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
 import Session from 'src/users-sessions/entities/user-session.entity';
+import Cart from 'src/carts/entities/cart.entity';
 
 @Table({
   tableName: 'user',
@@ -107,6 +108,9 @@ class User extends Model<User> {
     as: 'referred_to',
   })
   'referred_to': User[];
+
+  @HasMany(() => Cart)
+  'carts': Cart[];
 
   @Default(10)
   @Column
