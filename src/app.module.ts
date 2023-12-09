@@ -22,6 +22,7 @@ import { CampaignsModule } from './campaigns/campaigns.module';
 import { SearchModule } from './search/search.module';
 import { EmployeeshipsModule } from './employeeships/employeeships.module';
 import { ShopModule } from './shop/shop.module';
+import { CartsModule } from './carts/carts.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { ShopModule } from './shop/shop.module';
     SearchModule,
     EmployeeshipsModule,
     ShopModule,
+    CartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
