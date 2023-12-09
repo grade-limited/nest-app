@@ -77,9 +77,10 @@ class Request extends Model<Request> {
   @IsUrl
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isLinkedInUrl(value: string): void {
+        if (value === null || value === undefined || value === '') return;
         const linkedInUrlRegex =
           /^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile)\/([-a-zA-Z0-9]+)\/*/;
 
@@ -95,9 +96,10 @@ class Request extends Model<Request> {
   @IsUrl
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isFacebookUrl(value: string): void {
+        if (value === null || value === undefined || value === '') return;
         const facebookUrlRegex =
           /^(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/;
         if (!facebookUrlRegex.test(value)) {
