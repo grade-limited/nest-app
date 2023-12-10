@@ -33,7 +33,7 @@ class Category extends Model<Category> {
   @Column
   'name': string;
 
-  @Column
+  @Column(DataType.STRING(1000))
   'description': string;
 
   @Column

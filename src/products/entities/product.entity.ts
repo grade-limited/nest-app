@@ -43,7 +43,7 @@ class Product extends Model<Product> {
   'name': string;
 
   @AllowNull(true)
-  @Column
+  @Column(DataType.STRING(1000))
   'description': string;
 
   @AllowNull(true)

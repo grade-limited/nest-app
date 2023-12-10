@@ -33,7 +33,7 @@ class Role extends Model<Role> {
   'prefix': string;
 
   @AllowNull
-  @Column
+  @Column(DataType.STRING(1000))
   'description': string;
 
   @Default(true)
