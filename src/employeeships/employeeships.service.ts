@@ -99,6 +99,9 @@ export class EmployeeshipsService {
           association: 'user',
           attributes: ['id', 'first_name', 'last_name', 'username'],
         },
+        {
+          association: 'organization',
+        },
       ],
     });
 
