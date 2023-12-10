@@ -19,4 +19,7 @@ export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
 
   @ApiProperty()
   'icon_url': string;
+
+  @ApiProperty()
+  'color_code': string;
 }

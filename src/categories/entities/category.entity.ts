@@ -45,6 +45,9 @@ class Category extends Model<Category> {
   @Column
   'icon_url': string;
 
+  @Column
+  'color_code': string;
+
   @HasMany(() => Product)
   'products': Product[];
 
