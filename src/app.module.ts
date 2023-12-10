@@ -24,6 +24,7 @@ import { EmployeeshipsModule } from './employeeships/employeeships.module';
 import { ShopModule } from './shop/shop.module';
 import { CartsModule } from './carts/carts.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
+import { NewslettersModule } from './newsletters/newsletters.module';
 import { QuotationsModule } from './quotations/quotations.module';
 import { OrdersModule } from './orders/orders.module';
 
@@ -54,6 +55,9 @@ import { OrdersModule } from './orders/orders.module';
     ShopModule,
     CartsModule,
     BookmarksModule,
+
+    NewslettersModule,
+
     QuotationsModule,
     OrdersModule,
   ],
