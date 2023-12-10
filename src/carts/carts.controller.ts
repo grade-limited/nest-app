@@ -22,10 +22,12 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class CartsController {
   constructor(private readonly cartsService: CartsService) {}
 
-  @HttpCode(201)
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartsService.create(createCartDto);
+  @HttpCode(201)
+  create(@Request() req, @Body() createCartDto: CreateCartDto) {
+    return this.cartsService.create(req.user, createCartDto);
   }
 
   @ApiBearerAuth()
@@ -35,11 +37,19 @@ export class CartsController {
     return this.cartsService.findAll(req.user);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartsService.update(+id, updateCartDto);
+  update(
+    @Request() req,
+    @Param('id') id: string,
+    @Body() updateCartDto: UpdateCartDto,
+  ) {
+    return this.cartsService.update(req.user, +id, updateCartDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiQuery({
     name: 'permanent',
@@ -52,10 +62,11 @@ export class CartsController {
     required: false,
   })
   remove(
+    @Request() req,
     @Param('id') id: string,
     @Query('permanent') permanent?: boolean,
     @Query('restore') restore?: boolean,
   ) {
-    return this.cartsService.remove(+id, permanent, restore);
+    return this.cartsService.remove(req.user, +id, permanent, restore);
   }
 }

@@ -20,10 +20,12 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class BookmarksController {
   constructor(private readonly bookmarksService: BookmarksService) {}
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @HttpCode(201)
   @Post()
-  create(@Body() createBookmarkDto: CreateBookmarkDto) {
-    return this.bookmarksService.create(createBookmarkDto);
+  create(@Request() req, @Body() createBookmarkDto: CreateBookmarkDto) {
+    return this.bookmarksService.create(req.user, createBookmarkDto);
   }
 
   @ApiBearerAuth()
@@ -33,6 +35,8 @@ export class BookmarksController {
     return this.bookmarksService.findAll(req.user);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiQuery({
     name: 'permanent',
@@ -45,10 +49,11 @@ export class BookmarksController {
     required: false,
   })
   remove(
+    @Request() req,
     @Param('id') id: string,
     @Query('permanent') permanent?: boolean,
     @Query('restore') restore?: boolean,
   ) {
-    return this.bookmarksService.remove(+id, permanent, restore);
+    return this.bookmarksService.remove(req.user, +id, permanent, restore);
   }
 }
