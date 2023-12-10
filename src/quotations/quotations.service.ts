@@ -15,7 +15,7 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 export class QuotationsService {
   async create(user_extract: any, createquotationDto: CreateQuotationDto) {
     try {
-      await Quotation.create(
+      const quotation = await Quotation.create(
         {
           ...createquotationDto,
           user_id: user_extract.id,
