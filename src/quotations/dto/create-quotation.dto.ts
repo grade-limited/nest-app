@@ -12,14 +12,14 @@ export class CreateQuotationDto {
   contact_number: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   contact_email?: string;
 
   @ApiProperty({
     required: true,
   })
-  contact_designation?: string;
+  contact_designation: string;
 
   @ApiProperty({
     enum: ['Pending', 'Accepted', 'Processing', 'Completed', 'Declined'],

@@ -25,6 +25,7 @@ import { ShopModule } from './shop/shop.module';
 import { CartsModule } from './carts/carts.module';
 import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { QuotationsModule } from './quotations/quotations.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { QuotationsModule } from './quotations/quotations.module';
     CartsModule,
     BookmarksModule,
     QuotationsModule,
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
