@@ -46,7 +46,6 @@ class Quotation extends Model<Quotation> {
   'contact_email': string;
 
   @AllowNull(true)
-  @IsEmail
   @Column
   'contact_designation': string;
 

@@ -1,7 +1,6 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { CreateQuotationDto } from './create-quotation.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateQuotationDto extends PartialType(CreateQuotationDto) {
+export class UpdateQuotationDto {
   @ApiProperty({
     enum: ['Pending', 'Accepted', 'Processing', 'Completed', 'Declined'],
   })

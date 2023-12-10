@@ -22,6 +22,7 @@ export class QuotationsService {
         },
         {
           fields: [
+            'user_id',
             'contact_name',
             'contact_number',
             'contact_email',
@@ -50,7 +51,6 @@ export class QuotationsService {
       'contact_name',
       'contact_number',
       'contact_email',
-      'contact_designation',
     ]);
     const filters = pagination.format_filters({
       user_id,
@@ -62,6 +62,12 @@ export class QuotationsService {
           ...filters,
           ...trash_query,
         },
+        include: [
+          {
+            association: 'user',
+            attributes: ['id', 'first_name', 'last_name', 'username'],
+          },
+        ],
         order,
         limit,
         offset,
