@@ -54,7 +54,7 @@ export class CampaignsService {
     }
   }
 
-  async findAll(query: IPaginationQuery, is_active?: string) {
+  async findAll(query: IPaginationQuery, is_active?: boolean) {
     const pagination = new Pagination(query);
     const { limit, offset, paranoid, trash_query, order } =
       pagination.get_attributes();
@@ -63,6 +63,7 @@ export class CampaignsService {
     const filters = pagination.format_filters({
       is_active,
     });
+    console.log(typeof is_active, filters);
     return pagination.arrange(
       await Campaign.findAndCountAll({
         where: {

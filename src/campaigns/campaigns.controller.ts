@@ -48,7 +48,7 @@ export class CampaignsController {
   @ApiQuery(SearchQuery)
   findAll(
     @Query() query: IPaginationQuery,
-    @Query('is_active') is_active?: string,
+    @Query('is_active') is_active?: boolean,
   ) {
     return this.campaignsService.findAll(query, is_active);
   }

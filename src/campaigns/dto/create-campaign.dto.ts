@@ -25,12 +25,12 @@ export class CreateCampaignDto {
   end_date?: Date;
 
   @ApiProperty()
-  amount: number;
+  amount?: number;
 
   @ApiProperty({
     enum: ['amount', 'percentage'],
   })
-  amount_type: string;
+  amount_type?: string;
 
   @ApiProperty()
   campaign_type?: string;
