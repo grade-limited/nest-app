@@ -125,6 +125,7 @@ export class EmployeeshipsService {
         branch,
         desk_info,
         business_unit,
+        employeeship_status,
       } = updateEmployeeDto;
 
       const employeeship = await Employeeship.findByPk(id, {});
@@ -138,6 +139,7 @@ export class EmployeeshipsService {
         branch,
         desk_info,
         business_unit,
+        employeeship_status,
       });
 
       return {
