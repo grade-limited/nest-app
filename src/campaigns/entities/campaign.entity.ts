@@ -34,7 +34,7 @@ class Campaign extends Model<Campaign> {
   'name': string;
 
   @AllowNull(true)
-  @Column
+  @Column(DataType.STRING(1000))
   'description': string;
 
   @AllowNull(true)
