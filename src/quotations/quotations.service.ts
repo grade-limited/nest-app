@@ -10,12 +10,13 @@ import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import toBoolean from 'src/utils/conversion/toBoolean';
+import ProductQuotationJunction from './entities/product_quotation.entity';
 
 @Injectable()
 export class QuotationsService {
   async create(user_extract: any, createquotationDto: CreateQuotationDto) {
     try {
-      await Quotation.create(
+      const quotation = await Quotation.create(
         {
           ...createquotationDto,
           user_id: user_extract.id,
@@ -27,10 +28,27 @@ export class QuotationsService {
             'contact_number',
             'contact_email',
             'contact_designation',
-            'status',
           ],
         },
       );
+
+      await ProductQuotationJunction.bulkCreate(
+        createquotationDto.product_list.map((product) => ({
+          ...product,
+          quotation_id: quotation.id,
+        })),
+        {
+          fields: [
+            'product_id',
+            'quotation_id',
+            'quantity',
+            'is_customized',
+            'requirments',
+            'attachments',
+          ],
+        },
+      );
+
       return {
         statusCode: 201,
         message: `Quotation Created successfully`,

@@ -112,6 +112,26 @@ export class OrdersService {
   async findOne(id: number) {
     try {
       const order = await Order.findByPk(id, {
+        include: [
+          {
+            association: 'user',
+            attributes: ['id', 'first_name', 'last_name', 'username'],
+          },
+          {
+            association: 'products',
+            attributes: ['id', 'name', 'description', 'thumbnail_url'],
+            through: {
+              attributes: [
+                'id',
+                'product_id',
+                'order_id',
+                'quantity',
+                'unit_price',
+                'total_price',
+              ],
+            },
+          },
+        ],
         paranoid: false,
       });
 

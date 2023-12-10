@@ -3,6 +3,19 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateQuotationDto {
   @ApiProperty({
     required: true,
+    type: 'object',
+    isArray: true,
+  })
+  product_list: {
+    product_id: number;
+    quantity: number;
+    is_customized: boolean;
+    requirments: string;
+    attachments: string[];
+  }[];
+
+  @ApiProperty({
+    required: true,
   })
   contact_name: string;
 
@@ -20,9 +33,4 @@ export class CreateQuotationDto {
     required: true,
   })
   contact_designation: string;
-
-  @ApiProperty({
-    enum: ['Pending', 'Accepted', 'Processing', 'Completed', 'Declined'],
-  })
-  status: string;
 }

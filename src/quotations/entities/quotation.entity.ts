@@ -15,6 +15,7 @@ import {
   IsEmail,
   IsIn,
   BelongsToMany,
+  Default,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 import ProductQuotationJunction from 'src/quotations/entities/product_quotation.entity';
@@ -52,6 +53,7 @@ class Quotation extends Model<Quotation> {
   @Column
   'contact_designation': string;
 
+  @Default('Pending')
   @AllowNull(false)
   @IsIn({
     args: [['Pending', 'Accepted', 'Processing', 'Completed', 'Declined']],
