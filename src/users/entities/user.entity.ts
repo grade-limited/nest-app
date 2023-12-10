@@ -26,6 +26,7 @@ const bcrypt = require('bcrypt');
 import Session from 'src/users-sessions/entities/user-session.entity';
 import Cart from 'src/carts/entities/cart.entity';
 import Bookmark from 'src/bookmarks/entities/bookmark.entity';
+import Quotation from 'src/quotations/entities/quotation.entity';
 
 @Table({
   tableName: 'user',
@@ -142,6 +143,9 @@ class User extends Model<User> {
 
   @HasMany(() => Session)
   'sessions': Session[];
+
+  @HasMany(() => Quotation)
+  'quotations': Quotation[];
 
   @CreatedAt
   @Column({ field: 'created_at' })
