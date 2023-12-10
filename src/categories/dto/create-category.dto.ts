@@ -29,4 +29,9 @@ export class CreateCategoryDto {
     required: false,
   })
   'icon_url': string;
+
+  @ApiProperty({
+    required: false,
+  })
+  'color_code': string;
 }

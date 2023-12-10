@@ -31,7 +31,7 @@ class Brand extends Model<Brand> {
   'name': string;
 
   @AllowNull(true)
-  @Column
+  @Column(DataType.STRING(1000))
   'description': string;
 
   @AllowNull(true)

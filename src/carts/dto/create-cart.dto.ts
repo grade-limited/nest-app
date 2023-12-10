@@ -5,8 +5,5 @@ export class CreateCartDto {
   product_id: number;
 
   @ApiProperty()
-  user_id: number;
-
-  @ApiProperty()
   quantity: number;
 }

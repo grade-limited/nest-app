@@ -26,6 +26,8 @@ const bcrypt = require('bcrypt');
 import Session from 'src/users-sessions/entities/user-session.entity';
 import Cart from 'src/carts/entities/cart.entity';
 import Bookmark from 'src/bookmarks/entities/bookmark.entity';
+import Quotation from 'src/quotations/entities/quotation.entity';
+import Order from 'src/orders/entities/order.entity';
 
 @Table({
   tableName: 'user',
@@ -116,6 +118,9 @@ class User extends Model<User> {
   @HasMany(() => Bookmark)
   'bookmarks': Bookmark[];
 
+  @HasMany(() => Order)
+  'orders': Order[];
+
   @Default(10)
   @Column
   'max_session': number;
@@ -142,6 +147,9 @@ class User extends Model<User> {
 
   @HasMany(() => Session)
   'sessions': Session[];
+
+  @HasMany(() => Quotation)
+  'quotations': Quotation[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

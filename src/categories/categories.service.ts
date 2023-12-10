@@ -22,6 +22,7 @@ export class CategoriesService {
         cover_url,
         icon_url,
         parent_id,
+        color_code,
       } = createCategoryDto;
       await Categories.create({
         name,
@@ -30,6 +31,7 @@ export class CategoriesService {
         cover_url,
         icon_url,
         parent_id,
+        color_code,
       });
       return {
         statusCode: 201,
@@ -112,6 +114,7 @@ export class CategoriesService {
         cover_url,
         icon_url,
         parent_id,
+        color_code,
       } = updateCategoryDto;
 
       const category = await Categories.findByPk(id);
@@ -125,6 +128,7 @@ export class CategoriesService {
         cover_url,
         icon_url,
         parent_id,
+        color_code,
       });
       return {
         message: 'category updated successfully',

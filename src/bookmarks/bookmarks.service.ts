@@ -9,11 +9,12 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class BookmarksService {
-  async create(createBookmarkDto: CreateBookmarkDto) {
+  async create(user_extract: any, createBookmarkDto: CreateBookmarkDto) {
     try {
       await Bookmark.create(
         {
           ...createBookmarkDto,
+          user_id: user_extract.id,
         },
         {
           fields: ['user_id', 'product_id'],
@@ -44,13 +45,22 @@ export class BookmarksService {
     });
   }
 
-  async remove(id: number, permanent?: boolean, restore?: boolean) {
+  async remove(
+    user_extract: any,
+    id: number,
+    permanent?: boolean,
+    restore?: boolean,
+  ) {
     const bookmark = await Bookmark.findByPk(id, {
       paranoid: false,
     });
 
     if (!bookmark) {
       throw new NotFoundException(`Bookmark not found`);
+    }
+
+    if (bookmark.user_id !== user_extract.id) {
+      throw new BadRequestException(`Bookmark not found for this user`);
     }
 
     if (toBoolean(permanent)) {

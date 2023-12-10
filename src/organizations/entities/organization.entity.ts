@@ -40,7 +40,7 @@ class Organization extends Model<Organization> {
   @Column
   'contact_number': string;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Unique
   @IsEmail
   @NotEmpty({

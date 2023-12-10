@@ -75,7 +75,15 @@ export class EmployeeshipsService {
           ...filters,
           ...trash_query,
         },
-
+        include: [
+          {
+            association: 'user',
+            attributes: ['id', 'first_name', 'last_name', 'username'],
+          },
+          {
+            association: 'organization',
+          },
+        ],
         limit,
         order,
         offset,
@@ -85,7 +93,17 @@ export class EmployeeshipsService {
   }
 
   async findOne(id: number) {
-    const employeeship = await Employeeship.findByPk(id, {});
+    const employeeship = await Employeeship.findByPk(id, {
+      include: [
+        {
+          association: 'user',
+          attributes: ['id', 'first_name', 'last_name', 'username'],
+        },
+        {
+          association: 'organization',
+        },
+      ],
+    });
 
     if (!employeeship) {
       throw new NotFoundException(`Employeeship not found`);
@@ -107,6 +125,7 @@ export class EmployeeshipsService {
         branch,
         desk_info,
         business_unit,
+        employeeship_status,
       } = updateEmployeeDto;
 
       const employeeship = await Employeeship.findByPk(id, {});
@@ -120,6 +139,7 @@ export class EmployeeshipsService {
         branch,
         desk_info,
         business_unit,
+        employeeship_status,
       });
 
       return {

@@ -1,22 +1,24 @@
-import { PartialType, ApiProperty } from '@nestjs/swagger';
-import { CreateEmployeeshipDto } from './create-employeeship.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateEmployeeshipDto extends PartialType(CreateEmployeeshipDto) {
+export class UpdateEmployeeshipDto {
   @ApiProperty()
-  employee_id: string;
-
-  @ApiProperty()
-  depertment: string;
+  employee_id?: string;
 
   @ApiProperty()
-  designation: string;
+  depertment?: string;
 
   @ApiProperty()
-  branch: string;
+  designation?: string;
+
+  @ApiProperty()
+  branch?: string;
 
   @ApiProperty()
   desk_info?: string;
 
   @ApiProperty()
   business_unit?: string;
+
+  @ApiProperty()
+  employeeship_status?: string;
 }

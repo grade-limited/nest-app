@@ -48,6 +48,7 @@ export class EmployeeshipsController {
   @ApiQuery({
     name: 'employeeship_status',
     type: 'string',
+    enum: ['pending', 'confirmed', 'declined'],
     required: false,
   })
   @ApiQuery(TrashQuery)

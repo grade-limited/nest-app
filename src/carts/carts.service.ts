@@ -12,11 +12,12 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
 export class CartsService {
-  async create(createCartDto: CreateCartDto) {
+  async create(user_extract: any, createCartDto: CreateCartDto) {
     try {
       await Cart.create(
         {
           ...createCartDto,
+          user_id: user_extract.id,
         },
         {
           fields: ['user_id', 'product_id', 'quantity'],
@@ -47,13 +48,19 @@ export class CartsService {
     });
   }
 
-  async update(id: number, updateCartDto: UpdateCartDto) {
+  async update(user_extract: any, id: number, updateCartDto: UpdateCartDto) {
     try {
       const { quantity } = updateCartDto;
 
       const cart = await Cart.findByPk(id, {});
 
       if (!cart) throw new NotFoundException(`Cart not found`);
+
+      if (cart.user_id !== user_extract.id) {
+        throw new BadRequestException(
+          `You don't have permission to update this cart`,
+        );
+      }
 
       await cart.update({
         quantity,
@@ -77,13 +84,24 @@ export class CartsService {
     }
   }
 
-  async remove(id: number, permanent?: boolean, restore?: boolean) {
+  async remove(
+    user_extract: any,
+    id: number,
+    permanent?: boolean,
+    restore?: boolean,
+  ) {
     const cart = await Cart.findByPk(id, {
       paranoid: false,
     });
 
     if (!cart) {
       throw new NotFoundException(`Cart not found`);
+    }
+
+    if (cart.user_id !== user_extract.id) {
+      throw new BadRequestException(
+        `You don't have permission to delete this cart`,
+      );
     }
 
     if (toBoolean(permanent)) {
