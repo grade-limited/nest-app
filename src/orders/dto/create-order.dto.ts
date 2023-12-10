@@ -1,6 +1,40 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export class OrderProductDto {
+  @ApiProperty({
+    required: true,
+  })
+  product_id: number;
+
+  @ApiProperty({
+    required: true,
+  })
+  quantity: number;
+
+  @ApiProperty({
+    required: true,
+  })
+  unit_price: number;
+
+  @ApiProperty({
+    required: true,
+  })
+  total_price: number;
+}
+
 export class CreateOrderDto {
+  @ApiProperty({
+    required: true,
+    type: 'object',
+    isArray: true,
+  })
+  product_list: {
+    product_id: number;
+    quantity: number;
+    unit_price: number;
+    total_price: number;
+  }[];
+
   @ApiProperty({
     required: true,
   })
@@ -20,16 +54,6 @@ export class CreateOrderDto {
     required: true,
   })
   recipient_address: string;
-
-  @ApiProperty({
-    enum: ['Pending', 'Accepted', 'Processing', 'delivered', 'Declined'],
-  })
-  status: string;
-
-  @ApiProperty({
-    required: true,
-  })
-  expected_delivery_date: Date;
 
   @ApiProperty({
     required: true,

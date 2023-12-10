@@ -53,17 +53,18 @@ class Order extends Model<Order> {
   @Column
   'recipient_address': string;
 
+  @Default('Pending')
   @AllowNull(false)
   @IsIn({
     args: [['Pending', 'Accepted', 'Processing', 'delivered', 'Declined']],
-    msg: 'Not a selectabl status',
+    msg: 'Not a selectable status',
   })
   @Column(
     DataType.ENUM('Pending', 'Accepted', 'Processing', 'delivered', 'Declined'),
   )
   'status': string;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Column
   'expected_delivery_date': Date;
 

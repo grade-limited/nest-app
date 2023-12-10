@@ -10,12 +10,13 @@ import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import toBoolean from 'src/utils/conversion/toBoolean';
+import ProductOrderJunction from './entities/product_order.entity';
 
 @Injectable()
 export class OrdersService {
   async create(user_extract: any, createOrderDto: CreateOrderDto) {
     try {
-      await Order.create(
+      const order = await Order.create(
         {
           ...createOrderDto,
           user_id: user_extract.id,
@@ -27,13 +28,28 @@ export class OrdersService {
             'recipient_number',
             'recipient_email',
             'recipient_address',
-            'status',
-            'expected_delivery_date',
             'delivery_fee',
             'discount',
           ],
         },
       );
+
+      await ProductOrderJunction.bulkCreate(
+        createOrderDto.product_list.map((product) => ({
+          ...product,
+          order_id: order.id,
+        })),
+        {
+          fields: [
+            'product_id',
+            'order_id',
+            'quantity',
+            'unit_price',
+            'total_price',
+          ],
+        },
+      );
+
       return {
         statusCode: 201,
         message: 'Orders placed successfully',
@@ -70,6 +86,20 @@ export class OrdersService {
             association: 'user',
             attributes: ['id', 'first_name', 'last_name', 'username'],
           },
+          {
+            association: 'products',
+            attributes: ['id', 'name', 'description', 'thumbnail_url'],
+            through: {
+              attributes: [
+                'id',
+                'product_id',
+                'order_id',
+                'quantity',
+                'unit_price',
+                'total_price',
+              ],
+            },
+          },
         ],
         order,
         limit,
@@ -99,6 +129,7 @@ export class OrdersService {
       );
     }
   }
+
   async update(id: number, updateOrderDto: UpdateOrderDto) {
     try {
       const {
