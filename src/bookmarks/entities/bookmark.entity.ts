@@ -11,24 +11,19 @@ import {
   BelongsTo,
   ForeignKey,
   AllowNull,
-  Length,
 } from 'sequelize-typescript';
 
 import User from 'src/users/entities/user.entity';
 import Product from 'src/products/entities/product.entity';
 
 @Table({
-  tableName: 'cart',
+  tableName: 'bookmark',
 })
-class Cart extends Model<Cart> {
+class Bookmark extends Model<Bookmark> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.BIGINT)
   'id': number;
-
-  @Length({ min: 1 })
-  @Column(DataType.INTEGER)
-  'quantity': number;
 
   //relations
 
@@ -60,5 +55,4 @@ class Cart extends Model<Cart> {
   @Column({ field: 'deleted_at' })
   'deleted_at': Date;
 }
-
-export default Cart;
+export default Bookmark;

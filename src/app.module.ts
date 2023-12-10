@@ -23,6 +23,7 @@ import { SearchModule } from './search/search.module';
 import { EmployeeshipsModule } from './employeeships/employeeships.module';
 import { ShopModule } from './shop/shop.module';
 import { CartsModule } from './carts/carts.module';
+import { BookmarksModule } from './bookmarks/bookmarks.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { CartsModule } from './carts/carts.module';
     EmployeeshipsModule,
     ShopModule,
     CartsModule,
+    BookmarksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

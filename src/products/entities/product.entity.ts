@@ -15,6 +15,7 @@ import {
   BelongsToMany,
   HasMany,
 } from 'sequelize-typescript';
+import Bookmark from 'src/bookmarks/entities/bookmark.entity';
 import Brand from 'src/brands/entities/brand.entity';
 import Campaign from 'src/campaigns/entities/campaign.entity';
 import ProductCampaignJunction from 'src/campaigns/entities/product_campaigns.entity';
@@ -75,6 +76,9 @@ class Product extends Model<Product> {
 
   @HasMany(() => Cart)
   'carts': Cart[];
+
+  @HasMany(() => Bookmark)
+  'bookmarks': Bookmark[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

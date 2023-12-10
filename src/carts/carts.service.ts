@@ -8,8 +8,6 @@ import {
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import Cart from './entities/cart.entity';
-import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
-import Pagination from 'src/utils/Pagination';
 import toBoolean from 'src/utils/conversion/toBoolean';
 
 @Injectable()
