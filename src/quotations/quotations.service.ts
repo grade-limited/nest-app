@@ -85,6 +85,13 @@ export class QuotationsService {
             association: 'user',
             attributes: ['id', 'first_name', 'last_name', 'username'],
           },
+          {
+            association: 'products',
+            attributes: ['id', 'name', 'description', 'price'],
+            through: {
+              attributes: ['id', 'quantity', 'is_customized', 'requirments'],
+            },
+          },
         ],
         order,
         limit,
@@ -97,6 +104,19 @@ export class QuotationsService {
   async findOne(id: number) {
     try {
       const quotation = await Quotation.findByPk(id, {
+        include: [
+          {
+            association: 'user',
+            attributes: ['id', 'first_name', 'last_name', 'username'],
+          },
+          {
+            association: 'products',
+            attributes: ['id', 'name', 'description', 'price'],
+            through: {
+              attributes: ['id', 'quantity', 'is_customized', 'requirments'],
+            },
+          },
+        ],
         paranoid: false,
       });
 

@@ -32,7 +32,8 @@ export const databaseProviders = [
             process.env.DB_HOST || 'localhost',
           );
         })
-        .catch(() => {
+        .catch((err: any) => {
+          console.error(err);
           console.log(
             'Database failed to connect: ',
             process.env.DB_HOST || 'localhost',

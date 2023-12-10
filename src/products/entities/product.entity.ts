@@ -82,7 +82,7 @@ class Product extends Model<Product> {
   'orders': Order[];
 
   @BelongsToMany(() => Quotation, () => ProductQuotationJunction)
-  'quotatios': Quotation[];
+  'quotations': Quotation[];
 
   @HasMany(() => Cart)
   'carts': Cart[];

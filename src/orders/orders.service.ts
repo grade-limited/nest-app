@@ -121,14 +121,7 @@ export class OrdersService {
             association: 'products',
             attributes: ['id', 'name', 'description', 'thumbnail_url'],
             through: {
-              attributes: [
-                'id',
-                'product_id',
-                'order_id',
-                'quantity',
-                'unit_price',
-                'total_price',
-              ],
+              attributes: ['id', 'quantity', 'unit_price', 'total_price'],
             },
           },
         ],

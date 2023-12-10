@@ -55,9 +55,7 @@ import { OrdersModule } from './orders/orders.module';
     ShopModule,
     CartsModule,
     BookmarksModule,
-
     NewslettersModule,
-
     QuotationsModule,
     OrdersModule,
   ],
