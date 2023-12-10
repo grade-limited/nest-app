@@ -3,41 +3,34 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpCode,
-  Query,
   UseGuards,
   Request,
+  Query,
 } from '@nestjs/common';
-import { CartsService } from './carts.service';
-import { CreateCartDto } from './dto/create-cart.dto';
-import { UpdateCartDto } from './dto/update-cart.dto';
+import { BookmarksService } from './bookmarks.service';
+import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-@ApiTags('carts')
-@Controller('carts')
-export class CartsController {
-  constructor(private readonly cartsService: CartsService) {}
+@ApiTags('bookmarks')
+@Controller('bookmarks')
+export class BookmarksController {
+  constructor(private readonly bookmarksService: BookmarksService) {}
 
   @HttpCode(201)
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartsService.create(createCartDto);
+  create(@Body() createBookmarkDto: CreateBookmarkDto) {
+    return this.bookmarksService.create(createBookmarkDto);
   }
 
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get()
   findAll(@Request() req) {
-    return this.cartsService.findAll(req.user);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartsService.update(+id, updateCartDto);
+    return this.bookmarksService.findAll(req.user);
   }
 
   @Delete(':id')
@@ -56,6 +49,6 @@ export class CartsController {
     @Query('permanent') permanent?: boolean,
     @Query('restore') restore?: boolean,
   ) {
-    return this.cartsService.remove(+id, permanent, restore);
+    return this.bookmarksService.remove(+id, permanent, restore);
   }
 }
