@@ -21,6 +21,10 @@ import Campaign from 'src/campaigns/entities/campaign.entity';
 import ProductCampaignJunction from 'src/campaigns/entities/product_campaigns.entity';
 import Cart from 'src/carts/entities/cart.entity';
 import Category from 'src/categories/entities/category.entity';
+import Order from 'src/orders/entities/order.entity';
+import ProductOrderJunction from 'src/orders/entities/product_order.entity';
+import Quotation from 'src/quotations/entities/quotation.entity';
+import ProductQuotationJunction from '../../quotations/entities/product_quotation.entity';
 
 @Table({
   tableName: 'product',
@@ -73,6 +77,12 @@ class Product extends Model<Product> {
 
   @BelongsToMany(() => Campaign, () => ProductCampaignJunction)
   'campaigns': Campaign[];
+
+  @BelongsToMany(() => Order, () => ProductOrderJunction)
+  'orders': Order[];
+
+  @BelongsToMany(() => Quotation, () => ProductQuotationJunction)
+  'quotatios': Quotation[];
 
   @HasMany(() => Cart)
   'carts': Cart[];

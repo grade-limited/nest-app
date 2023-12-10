@@ -15,8 +15,11 @@ import {
   IsEmail,
   IsIn,
   Default,
+  BelongsToMany,
 } from 'sequelize-typescript';
 import User from 'src/users/entities/user.entity';
+import ProductOrderJunction from './product_order.entity';
+import Product from 'src/products/entities/product.entity';
 
 @Table({
   tableName: 'order',
@@ -81,6 +84,9 @@ class Order extends Model<Order> {
 
   @BelongsTo(() => User)
   'user': User;
+
+  @BelongsToMany(() => Product, () => ProductOrderJunction)
+  'products': Product[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

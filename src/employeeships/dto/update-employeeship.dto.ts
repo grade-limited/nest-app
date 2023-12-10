@@ -3,16 +3,16 @@ import { CreateEmployeeshipDto } from './create-employeeship.dto';
 
 export class UpdateEmployeeshipDto extends PartialType(CreateEmployeeshipDto) {
   @ApiProperty()
-  employee_id: string;
+  employee_id?: string;
 
   @ApiProperty()
-  depertment: string;
+  depertment?: string;
 
   @ApiProperty()
-  designation: string;
+  designation?: string;
 
   @ApiProperty()
-  branch: string;
+  branch?: string;
 
   @ApiProperty()
   desk_info?: string;

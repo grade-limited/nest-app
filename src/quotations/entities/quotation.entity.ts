@@ -14,7 +14,10 @@ import {
   NotEmpty,
   IsEmail,
   IsIn,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import Product from 'src/products/entities/product.entity';
+import ProductQuotationJunction from 'src/quotations/entities/product_quotation.entity';
 import User from 'src/users/entities/user.entity';
 
 @Table({
@@ -66,6 +69,9 @@ class Quotation extends Model<Quotation> {
 
   @BelongsTo(() => User)
   'user': User;
+
+  @BelongsToMany(() => Product, () => ProductQuotationJunction)
+  'products': Product[];
 
   @CreatedAt
   @Column({ field: 'created_at' })
