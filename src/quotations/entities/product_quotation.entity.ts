@@ -48,7 +48,7 @@ class ProductQuotationJunction extends Model<ProductQuotationJunction> {
 
   @AllowNull
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(10000),
     get: function () {
       return JSON.parse(this.getDataValue('attachments') || '[]');
     },
