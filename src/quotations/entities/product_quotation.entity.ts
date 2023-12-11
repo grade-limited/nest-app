@@ -53,7 +53,7 @@ class ProductQuotationJunction extends Model<ProductQuotationJunction> {
       return JSON.parse(this.getDataValue('attachments') || '[]');
     },
   })
-  'attachments': string[];
+  'attachments': string;
 
   @CreatedAt
   @Column({ field: 'created_at' })

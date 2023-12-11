@@ -15,8 +15,14 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 export class ProductsService {
   async create(createProductDto: CreateProductDto) {
     try {
-      const { name, description, category_id, brand_id, thumbnail_url } =
-        createProductDto;
+      const {
+        name,
+        description,
+        category_id,
+        brand_id,
+        thumbnail_url,
+        attachments,
+      } = createProductDto;
 
       await Product.create({
         name,
@@ -24,6 +30,7 @@ export class ProductsService {
         brand_id,
         category_id,
         thumbnail_url,
+        attachments: JSON.stringify(attachments || []),
       });
       return {
         statusCode: 201,
@@ -134,7 +141,7 @@ export class ProductsService {
         brand_id,
         category_id,
         thumbnail_url,
-        attachments,
+        attachments: JSON.stringify(attachments || []),
       });
       return {
         message: 'Product updated successfully',

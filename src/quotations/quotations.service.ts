@@ -35,6 +35,7 @@ export class QuotationsService {
       await ProductQuotationJunction.bulkCreate(
         createquotationDto.product_list.map((product) => ({
           ...product,
+          attachments: JSON.stringify(product.attachments || []),
           quotation_id: quotation.id,
         })),
         {

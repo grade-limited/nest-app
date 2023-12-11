@@ -57,7 +57,7 @@ class Product extends Model<Product> {
       return JSON.parse(this.getDataValue('attachments') || '[]');
     },
   })
-  'attachments': string[];
+  'attachments': string;
 
   @ForeignKey(() => Brand)
   @AllowNull
