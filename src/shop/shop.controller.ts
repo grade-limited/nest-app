@@ -10,4 +10,9 @@ export class ShopController {
   findOne(@Param('id') id: string) {
     return this.shopService.findOne(+id);
   }
+
+  @Get('landing/cat-prod')
+  LandingPage() {
+    return this.shopService.LandingPage();
+  }
 }
