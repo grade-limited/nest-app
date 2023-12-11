@@ -59,7 +59,7 @@ export class NewslettersService {
     });
 
     if (!newsletter) {
-      throw new NotFoundException(`Subscription not found`);
+      throw new NotFoundException(`Subscribed to GRADE BD`);
     }
 
     if (toBoolean(permanent)) {
