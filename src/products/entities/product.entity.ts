@@ -54,6 +54,24 @@ class Product extends Model<Product> {
   @Column({
     type: DataType.ARRAY(DataType.STRING),
     get: function () {
+      return JSON.parse(this.getDataValue('price') || '[]');
+    },
+  })
+  'price': string;
+
+  @AllowNull
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    get: function () {
+      return JSON.parse(this.getDataValue('price') || '[]');
+    },
+  })
+  'minimum_order_quantity': string;
+
+  @AllowNull
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    get: function () {
       return JSON.parse(this.getDataValue('attachments') || '[]');
     },
   })

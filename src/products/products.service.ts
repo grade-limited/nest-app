@@ -22,6 +22,8 @@ export class ProductsService {
         brand_id,
         thumbnail_url,
         attachments,
+        price,
+        minimum_order_quantity,
       } = createProductDto;
 
       await Product.create({
@@ -30,7 +32,9 @@ export class ProductsService {
         brand_id,
         category_id,
         thumbnail_url,
+        price: JSON.stringify(price || []),
         attachments: JSON.stringify(attachments || []),
+        minimum_order_quantity: JSON.stringify(minimum_order_quantity || []),
       });
       return {
         statusCode: 201,
@@ -129,6 +133,8 @@ export class ProductsService {
         thumbnail_url,
         category_id,
         attachments,
+        price,
+        minimum_order_quantity,
       } = updateProductDto;
 
       const product = await Product.findByPk(id);
@@ -141,7 +147,17 @@ export class ProductsService {
         brand_id,
         category_id,
         thumbnail_url,
-        attachments: JSON.stringify(attachments || []),
+        ...(price !== null ? { price: JSON.stringify(price || []) } : {}),
+        ...(attachments !== null
+          ? { attachments: JSON.stringify(attachments || []) }
+          : {}),
+        ...(minimum_order_quantity !== null
+          ? {
+              minimum_order_quantity: JSON.stringify(
+                minimum_order_quantity || [],
+              ),
+            }
+          : {}),
       });
       return {
         message: 'Product updated successfully',

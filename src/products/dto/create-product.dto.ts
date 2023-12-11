@@ -18,6 +18,23 @@ export class CreateProductDto {
   @ApiProperty({
     required: false,
   })
+  'minimum_order_quantity': {
+    account_type: string;
+    quantity: number;
+  }[];
+
+  @ApiProperty({
+    required: true,
+  })
+  'price': {
+    account_type: string;
+    min_quantity: number;
+    per_unit: number;
+  }[];
+
+  @ApiProperty({
+    required: false,
+  })
   'category_id': number;
 
   @ApiProperty({
