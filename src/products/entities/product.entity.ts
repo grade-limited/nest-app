@@ -71,7 +71,7 @@ class Product extends Model<Product> {
   @Column({
     type: DataType.STRING,
     get: function () {
-      return JSON.parse(this.getDataValue('price') || '[]');
+      return JSON.parse(this.getDataValue('minimum_order_quantity') || '[]');
     },
   })
   'minimum_order_quantity': string;
