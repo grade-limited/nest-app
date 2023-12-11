@@ -1,4 +1,3 @@
-import { HttpStatus } from '@nestjs/common';
 import {
   Model,
   Table,
@@ -15,7 +14,10 @@ import {
   IsEmail,
   IsUrl,
   Unique,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import Employeeship from 'src/employeeships/entities/employeeship.entity';
+import User from 'src/users/entities/user.entity';
 
 @Table({
   tableName: 'organization',
@@ -102,6 +104,9 @@ class Organization extends Model<Organization> {
     },
   })
   'facebook_url': string;
+
+  @BelongsToMany(() => User, () => Employeeship)
+  'employees': User[];
 
   @AllowNull(true)
   @IsUrl

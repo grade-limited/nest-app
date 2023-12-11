@@ -20,6 +20,7 @@ import {
   NotEmpty,
   IsIn,
   Is,
+  BelongsToMany,
 } from 'sequelize-typescript';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const bcrypt = require('bcrypt');
@@ -28,6 +29,8 @@ import Cart from 'src/carts/entities/cart.entity';
 import Bookmark from 'src/bookmarks/entities/bookmark.entity';
 import Quotation from 'src/quotations/entities/quotation.entity';
 import Order from 'src/orders/entities/order.entity';
+import Organization from 'src/organizations/entities/organization.entity';
+import Employeeship from 'src/employeeships/entities/employeeship.entity';
 
 @Table({
   tableName: 'user',
@@ -120,6 +123,9 @@ class User extends Model<User> {
 
   @HasMany(() => Order)
   'orders': Order[];
+
+  @BelongsToMany(() => Organization, () => Employeeship)
+  'organizations': Organization[];
 
   @Default(10)
   @Column

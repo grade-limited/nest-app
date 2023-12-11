@@ -23,4 +23,7 @@ export class CreateEmployeeshipDto {
 
   @ApiProperty()
   business_unit?: string;
+
+  @ApiProperty()
+  is_kam?: boolean;
 }

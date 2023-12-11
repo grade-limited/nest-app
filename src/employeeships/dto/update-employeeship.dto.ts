@@ -21,4 +21,7 @@ export class UpdateEmployeeshipDto {
 
   @ApiProperty()
   employeeship_status?: string;
+
+  @ApiProperty()
+  is_kam?: boolean;
 }

@@ -30,6 +30,7 @@ export class EmployeeshipsService {
             'designation',
             'desk_info',
             'business_unit',
+            'is_kam',
           ],
         },
       );
@@ -126,6 +127,7 @@ export class EmployeeshipsService {
         desk_info,
         business_unit,
         employeeship_status,
+        is_kam,
       } = updateEmployeeDto;
 
       const employeeship = await Employeeship.findByPk(id, {});
@@ -140,6 +142,7 @@ export class EmployeeshipsService {
         desk_info,
         business_unit,
         employeeship_status,
+        is_kam,
       });
 
       return {

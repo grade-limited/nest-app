@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import Employeeship from 'src/employeeships/entities/employeeship.entity';
 import User from 'src/users/entities/user.entity';
 
 @Injectable()
@@ -39,6 +40,16 @@ export class AuthGuard implements CanActivate {
                 [Op.ne]: null,
             }, */
       },
+      include: [
+        {
+          association: 'organizations',
+          through: {
+            where: {
+              employeeship_status: 'confirmed',
+            },
+          },
+        },
+      ],
       attributes: {
         exclude: ['password'],
       },

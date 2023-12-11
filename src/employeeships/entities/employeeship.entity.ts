@@ -49,6 +49,10 @@ class Employeeship extends Model<Employeeship> {
   @Column
   'business_unit': string;
 
+  @Default(false)
+  @Column
+  'is_kam': boolean;
+
   @CreatedAt
   @Column({ field: 'created_at' })
   'created_at': Date;
