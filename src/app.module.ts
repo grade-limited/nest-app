@@ -27,6 +27,7 @@ import { BookmarksModule } from './bookmarks/bookmarks.module';
 import { NewslettersModule } from './newsletters/newsletters.module';
 import { QuotationsModule } from './quotations/quotations.module';
 import { OrdersModule } from './orders/orders.module';
+import { CartQuotationModule } from './cart-quotation/cart-quotation.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { OrdersModule } from './orders/orders.module';
     NewslettersModule,
     QuotationsModule,
     OrdersModule,
+    CartQuotationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
