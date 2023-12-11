@@ -2,6 +2,8 @@ import {
   BadRequestException,
   Controller,
   Get,
+  HttpCode,
+  NotFoundException,
   Param,
   Post,
   Res,
@@ -16,7 +18,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { UploadSingleFileDto } from './dto/upload-single-file';
 import { UploadMultipleFilesDto } from './dto/upload-multiple-files';
 import storage from './files.storage';
-import { createReadStream } from 'fs';
+import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
 import { Response } from 'express';
 
@@ -50,25 +52,32 @@ export class FilesController {
 
   @Get('download/:filename')
   streamFile(@Param('filename') filename: string): StreamableFile {
-    const file = createReadStream(
-      join(
-        process.cwd(),
-        process.env.FILE_UPLOAD_PATH || '../file_bucket',
-        filename,
-      ),
-    );
-    return new StreamableFile(file);
+    if (existsSync(join(process.cwd(), '../file_bucket', filename))) {
+      const file = createReadStream(
+        join(
+          process.cwd(),
+          process.env.FILE_UPLOAD_PATH || '../file_bucket',
+          filename,
+        ),
+      );
+      return new StreamableFile(file);
+    }
   }
 
   @Get(':filename')
   getFile(@Param('filename') filename: string, @Res() res: Response) {
-    const file = createReadStream(
-      join(
-        process.cwd(),
-        process.env.FILE_UPLOAD_PATH || '../file_bucket',
-        filename,
-      ),
-    );
-    file.pipe(res as any);
+    if (existsSync(join(process.cwd(), '../file_bucket', filename))) {
+      const file = createReadStream(
+        join(
+          process.cwd(),
+          process.env.FILE_UPLOAD_PATH || '../file_bucket',
+          filename,
+        ),
+      );
+      file.pipe(res as any);
+    } else {
+      console.log('File not found');
+      return res.status(404);
+    }
   }
 }
