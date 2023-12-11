@@ -41,6 +41,14 @@ export class ShopService {
           include: [
             {
               model: Product,
+              include: [
+                {
+                  association: 'brand',
+                },
+                {
+                  association: 'category',
+                },
+              ],
               limit: 10, // Limit to top 10 products
               order: [['created_at', 'DESC']], // Order by created_at, adjust as needed
             },
@@ -48,6 +56,14 @@ export class ShopService {
         },
         {
           model: Product,
+          include: [
+            {
+              association: 'brand',
+            },
+            {
+              association: 'category',
+            },
+          ],
           limit: 10, // Limit to top 10 products
           order: [['created_at', 'DESC']], // Order by created_at, adjust as needed
         },
