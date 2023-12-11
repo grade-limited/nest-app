@@ -24,6 +24,8 @@ export class ProductsService {
         attachments,
         price,
         minimum_order_quantity,
+        sku,
+        unit_of_measure,
       } = createProductDto;
 
       await Product.create({
@@ -32,6 +34,8 @@ export class ProductsService {
         brand_id,
         category_id,
         thumbnail_url,
+        sku,
+        unit_of_measure,
         price: JSON.stringify(price || []),
         attachments: JSON.stringify(attachments || []),
         minimum_order_quantity: JSON.stringify(minimum_order_quantity || []),
@@ -135,6 +139,8 @@ export class ProductsService {
         attachments,
         price,
         minimum_order_quantity,
+        sku,
+        unit_of_measure,
       } = updateProductDto;
 
       const product = await Product.findByPk(id);
@@ -147,6 +153,8 @@ export class ProductsService {
         brand_id,
         category_id,
         thumbnail_url,
+        sku,
+        unit_of_measure,
         ...(price !== null ? { price: JSON.stringify(price || []) } : {}),
         ...(attachments !== null
           ? { attachments: JSON.stringify(attachments || []) }

@@ -60,6 +60,14 @@ class Product extends Model<Product> {
   'price': string;
 
   @AllowNull
+  @Column
+  'sku': string;
+
+  @AllowNull
+  @Column
+  'unit_of_measure': string;
+
+  @AllowNull
   @Column({
     type: DataType.ARRAY(DataType.STRING),
     get: function () {

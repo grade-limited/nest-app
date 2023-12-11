@@ -35,6 +35,16 @@ export class CreateProductDto {
   @ApiProperty({
     required: false,
   })
+  'sku': string;
+
+  @ApiProperty({
+    required: false,
+  })
+  'unit_of_measure': string;
+
+  @ApiProperty({
+    required: false,
+  })
   'category_id': number;
 
   @ApiProperty({

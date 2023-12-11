@@ -14,6 +14,16 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @ApiProperty({
     required: false,
   })
+  'sku': string;
+
+  @ApiProperty({
+    required: false,
+  })
+  'unit_of_measure': string;
+
+  @ApiProperty({
+    required: false,
+  })
   'minimum_order_quantity': {
     account_type: string;
     quantity: number;
