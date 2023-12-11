@@ -38,6 +38,11 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
     per_unit: number;
   }[];
 
+  @ApiProperty({
+    required: false,
+  })
+  'market_price': number;
+
   @ApiProperty()
   'category_id': number;
 

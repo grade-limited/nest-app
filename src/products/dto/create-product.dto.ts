@@ -45,6 +45,11 @@ export class CreateProductDto {
   @ApiProperty({
     required: false,
   })
+  'market_price': number;
+
+  @ApiProperty({
+    required: false,
+  })
   'category_id': number;
 
   @ApiProperty({
