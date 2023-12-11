@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Op } from 'sequelize';
 import Category from 'src/categories/entities/category.entity';
 import Product from 'src/products/entities/product.entity';
+import Pagination from 'src/utils/Pagination';
+import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 
 @Injectable()
 export class ShopService {
@@ -28,6 +31,55 @@ export class ShopService {
       message: 'Product fetched successfully',
       data: product,
     };
+  }
+
+  async ProductSearch(
+    query: IPaginationQuery,
+    brand_id?: number,
+    category_id?: number,
+    campaign_id?: number,
+  ) {
+    const pagination = new Pagination(query);
+
+    const { limit, offset, paranoid, trash_query, order } =
+      pagination.get_attributes();
+
+    const search_ops = pagination.get_search_ops(['name']);
+    const filters = pagination.format_filters({
+      brand_id,
+      category_id,
+    });
+    return pagination.arrange(
+      await Product.findAndCountAll({
+        where: {
+          [Op.or]: search_ops,
+          ...filters,
+          ...trash_query,
+        },
+        include: [
+          {
+            association: 'brand',
+            //attributes: ['id', 'name', 'description'],
+          },
+          {
+            association: 'category',
+            //attributes: ['id', 'name', 'description'],
+          },
+          {
+            association: 'campaigns',
+            ...(!!campaign_id && {
+              where: {
+                id: campaign_id,
+              },
+            }),
+          },
+        ],
+        order,
+        paranoid,
+        limit,
+        offset,
+      }),
+    );
   }
 
   private async getNestedCategoriesWithTopProducts(
