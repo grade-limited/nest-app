@@ -65,11 +65,11 @@ class Campaign extends Model<Campaign> {
   @Column
   'end_date': Date;
 
-  @AllowNull(false)
+  @Default(0)
   @Column(DataType.FLOAT)
   'amount': number;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @IsIn({
     args: [['amount', 'percentage']],
     msg: 'Must be amount or percentage',
