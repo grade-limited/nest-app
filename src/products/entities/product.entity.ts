@@ -14,6 +14,7 @@ import {
   NotEmpty,
   BelongsToMany,
   HasMany,
+  Default,
 } from 'sequelize-typescript';
 import Bookmark from 'src/bookmarks/entities/bookmark.entity';
 import Brand from 'src/brands/entities/brand.entity';
@@ -50,7 +51,12 @@ class Product extends Model<Product> {
   @Column
   'thumbnail_url': string;
 
+  @Default(0)
+  @Column(DataType.FLOAT)
+  'market_price': number;
+
   @AllowNull
+  @Default('[]')
   @Column({
     type: DataType.STRING,
     get: function () {
