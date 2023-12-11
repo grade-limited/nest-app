@@ -11,6 +11,11 @@ export class ShopService {
         },
         {
           association: 'category',
+          include: [
+            {
+              association: 'parent',
+            },
+          ],
         },
       ],
     });
