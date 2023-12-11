@@ -52,7 +52,7 @@ class Product extends Model<Product> {
 
   @AllowNull
   @Column({
-    type: DataType.ARRAY(DataType.STRING),
+    type: DataType.STRING,
     get: function () {
       return JSON.parse(this.getDataValue('price') || '[]');
     },
@@ -69,7 +69,7 @@ class Product extends Model<Product> {
 
   @AllowNull
   @Column({
-    type: DataType.ARRAY(DataType.STRING),
+    type: DataType.STRING,
     get: function () {
       return JSON.parse(this.getDataValue('price') || '[]');
     },
@@ -78,7 +78,7 @@ class Product extends Model<Product> {
 
   @AllowNull
   @Column({
-    type: DataType.ARRAY(DataType.STRING),
+    type: DataType.STRING,
     get: function () {
       return JSON.parse(this.getDataValue('attachments') || '[]');
     },
