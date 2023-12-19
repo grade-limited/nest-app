@@ -7,6 +7,7 @@ import {
   Delete,
   Query,
   Put,
+  Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -20,11 +21,17 @@ import {
   TrashQuery,
 } from 'src/utils/Pagination/dto/query.dto';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
 
   @Get()
   // Pagination Queries
