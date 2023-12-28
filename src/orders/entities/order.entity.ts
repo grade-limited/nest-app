@@ -64,6 +64,14 @@ class Order extends Model<Order> {
   )
   'status': string;
 
+  @AllowNull(false)
+  @IsIn({
+    args: [['API', 'Website', 'Android', 'iOS', 'Admin']],
+    msg: 'Please choose valid device',
+  })
+  @Column(DataType.ENUM('API', 'Website', 'Android', 'iOS', 'Admin'))
+  'registered_from': string;
+
   @AllowNull(true)
   @Column
   'expected_delivery_date': Date;

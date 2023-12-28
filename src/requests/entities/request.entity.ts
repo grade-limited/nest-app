@@ -49,6 +49,14 @@ class Request extends Model<Request> {
   @Column
   'business_subtype': string;
 
+  @AllowNull(false)
+  @IsIn({
+    args: [['API', 'Website', 'Android', 'iOS', 'Admin']],
+    msg: 'Please choose valid device',
+  })
+  @Column(DataType.ENUM('API', 'Website', 'Android', 'iOS', 'Admin'))
+  'registered_from': string;
+
   @Is([/01\d{9}$/])
   @AllowNull(false)
   @Unique
