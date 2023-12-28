@@ -15,9 +15,11 @@ import {
   IsUrl,
   Unique,
   BelongsToMany,
+  HasMany,
 } from 'sequelize-typescript';
 import Employeeship from 'src/employeeships/entities/employeeship.entity';
 import User from 'src/users/entities/user.entity';
+import Request from 'src/requests/entities/request.entity';
 
 @Table({
   tableName: 'organization',
@@ -107,6 +109,9 @@ class Organization extends Model<Organization> {
 
   @BelongsToMany(() => User, () => Employeeship)
   'employees': User[];
+
+  @HasMany(() => Request)
+  'request': Request[];
 
   @AllowNull(true)
   @IsUrl

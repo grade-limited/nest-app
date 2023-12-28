@@ -5,4 +5,10 @@ export class UpdateRequestDto {
     enum: ['pending', 'approved', 'in progress', 'declined'],
   })
   request_status?: string;
+
+  @ApiProperty()
+  organization_id?: number;
+
+  @ApiProperty()
+  employee_id?: number;
 }

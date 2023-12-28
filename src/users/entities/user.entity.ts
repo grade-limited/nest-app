@@ -149,10 +149,10 @@ class User extends Model<User> {
 
   @AllowNull(false)
   @IsIn({
-    args: [['API', 'Website', 'Android', 'iOS']],
+    args: [['API', 'Website', 'Android', 'iOS', 'Admin']],
     msg: 'Please choose valid device',
   })
-  @Column(DataType.ENUM('API', 'Website', 'Android', 'iOS'))
+  @Column(DataType.ENUM('API', 'Website', 'Android', 'iOS', 'Admin'))
   'registered_from': string;
 
   @HasMany(() => Session)

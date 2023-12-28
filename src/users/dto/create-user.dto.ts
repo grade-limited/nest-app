@@ -31,7 +31,7 @@ export class CreateUserDto {
   primary_contact: string;
 
   @ApiProperty({
-    enum: ['API', 'Website', 'Android', 'iOS'],
+    enum: ['API', 'Website', 'Android', 'iOS', 'Admin'],
   })
   registered_from: string;
 
