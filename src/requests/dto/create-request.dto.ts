@@ -11,6 +11,11 @@ export class CreateRequestDto {
   business_type: string;
 
   @ApiProperty({
+    enum: ['API', 'Website', 'Android', 'iOS', 'Admin'],
+  })
+  registered_from: string;
+
+  @ApiProperty({
     required: true,
   })
   business_subtype: string;
