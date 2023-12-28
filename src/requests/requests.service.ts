@@ -120,7 +120,7 @@ export class RequestsService {
 
   async update(id: number, updateRequestDto: UpdateRequestDto) {
     try {
-      const { request_status } = updateRequestDto;
+      const { request_status, organization_id, employee_id } = updateRequestDto;
 
       const request = await Request.findByPk(id);
       if (!request) {
@@ -128,6 +128,8 @@ export class RequestsService {
       }
       await request.update({
         request_status,
+        organization_id,
+        employee_id,
       });
       return {
         message: 'organization updated successfully',

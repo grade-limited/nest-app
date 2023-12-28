@@ -16,8 +16,11 @@ import {
   Unique,
   IsUrl,
   Is,
+  BelongsTo,
+  ForeignKey,
 } from 'sequelize-typescript';
-
+import Organization from 'src/organizations/entities/organization.entity';
+import Employee from 'src/employees/entities/employee.entity';
 @Table({
   tableName: 'request',
 })
@@ -160,6 +163,23 @@ class Request extends Model<Request> {
   })
   @Column(DataType.ENUM('pending', 'approved', 'in progress', 'declined'))
   'request_status': string;
+
+  //relations
+  @ForeignKey(() => Organization)
+  @AllowNull
+  @Column(DataType.BIGINT)
+  'organization_id': number;
+
+  @BelongsTo(() => Organization)
+  'organization': Organization;
+
+  @ForeignKey(() => Employee)
+  @AllowNull
+  @Column(DataType.BIGINT)
+  'employee_id': number;
+
+  @BelongsTo(() => Employee)
+  'employee': Employee;
 
   @CreatedAt
   @Column({ field: 'created_at' })
