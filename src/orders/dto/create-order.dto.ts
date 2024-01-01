@@ -36,6 +36,11 @@ export class CreateOrderDto {
   }[];
 
   @ApiProperty({
+    enum: ['API', 'Website', 'Android', 'iOS', 'Admin'],
+  })
+  registered_from: string;
+
+  @ApiProperty({
     required: true,
   })
   recipient_name: string;

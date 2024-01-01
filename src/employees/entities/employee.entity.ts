@@ -24,6 +24,7 @@ import {
 const bcrypt = require('bcrypt');
 import Role from 'src/roles/entities/role.entity';
 import Session from 'src/employees-sessions/entities/employee-session.entity';
+import Request from 'src/requests/entities/request.entity';
 
 @Table({
   tableName: 'employee',
@@ -102,6 +103,9 @@ class Employee extends Model<Employee> {
 
   @HasMany(() => Session)
   'sessions': Session[];
+
+  @HasMany(() => Request)
+  'requests': Request[];
 
   @CreatedAt
   @Column({ field: 'created_at' })
