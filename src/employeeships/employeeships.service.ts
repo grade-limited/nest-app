@@ -27,6 +27,7 @@ export class EmployeeshipsService {
             'employeeship_status',
             'employee_id',
             'depertment',
+            'branch',
             'designation',
             'desk_info',
             'business_unit',
