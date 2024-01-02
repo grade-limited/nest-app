@@ -30,6 +30,7 @@ export class OrdersService {
             'recipient_address',
             'delivery_fee',
             'discount',
+            'registered_from',
           ],
         },
       );
