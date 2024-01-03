@@ -27,6 +27,7 @@ export class CampaignsService {
         amount,
         amount_type,
         campaign_type,
+        campaign_url,
       } = createCampaignDto;
 
       await Campaign.create({
@@ -41,6 +42,7 @@ export class CampaignsService {
         amount,
         amount_type,
         campaign_type,
+        campaign_url,
       });
 
       return {
@@ -113,6 +115,7 @@ export class CampaignsService {
         amount,
         amount_type,
         campaign_type,
+        campaign_url,
       } = updateCampaignDto;
 
       const campaign = await Campaign.findByPk(id);
@@ -132,6 +135,7 @@ export class CampaignsService {
         amount,
         amount_type,
         campaign_type,
+        campaign_url,
       });
       return {
         message: 'Campaign updated successfully',
