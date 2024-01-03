@@ -86,7 +86,7 @@ class Campaign extends Model<Campaign> {
   'products': Product[];
 
   @AllowNull(true)
-  //@IsUrl
+  @IsUrl
   @Column
   'campaign_url': string;
 
