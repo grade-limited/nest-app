@@ -34,4 +34,7 @@ export class CreateCampaignDto {
 
   @ApiProperty()
   campaign_type?: string;
+
+  @ApiProperty()
+  campaign_url?: string;
 }

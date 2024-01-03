@@ -13,6 +13,7 @@ import {
   Default,
   IsIn,
   BelongsToMany,
+  IsUrl,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 import ProductCampaignJunction from './product_campaigns.entity';
@@ -83,6 +84,11 @@ class Campaign extends Model<Campaign> {
 
   @BelongsToMany(() => Product, () => ProductCampaignJunction)
   'products': Product[];
+
+  @AllowNull(true)
+  //@IsUrl
+  @Column
+  'campaign_url': string;
 
   @CreatedAt
   @Column({ field: 'created_at' })
