@@ -26,6 +26,7 @@ class Cart extends Model<Cart> {
   @Column(DataType.BIGINT)
   'id': number;
 
+  @AllowNull(false)
   @Length({ min: 1 })
   @Column(DataType.INTEGER)
   'quantity': number;
@@ -41,7 +42,7 @@ class Cart extends Model<Cart> {
   'user': User;
 
   @ForeignKey(() => Product)
-  @AllowNull
+  @AllowNull(false)
   @Column(DataType.BIGINT)
   'product_id': number;
 
