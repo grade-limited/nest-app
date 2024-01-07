@@ -42,6 +42,11 @@ export class CartsService {
       include: [
         {
           association: 'product',
+          include: [
+            {
+              association: 'brand',
+            },
+          ],
         },
       ],
       attributes: ['id', 'quantity', 'created_at', 'updated_at'],
