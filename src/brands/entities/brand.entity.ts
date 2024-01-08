@@ -11,7 +11,6 @@ import {
   DeletedAt,
   HasMany,
   NotEmpty,
-  IsUrl,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 @Table({

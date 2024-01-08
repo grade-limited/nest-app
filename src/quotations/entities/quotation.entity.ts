@@ -57,7 +57,7 @@ class Quotation extends Model<Quotation> {
   @AllowNull(false)
   @IsIn({
     args: [['Pending', 'Accepted', 'Processing', 'Completed', 'Declined']],
-    msg: 'Not a selectabl status',
+    msg: 'Not a selectable status',
   })
   @Column(
     DataType.ENUM('Pending', 'Accepted', 'Processing', 'Completed', 'Declined'),
