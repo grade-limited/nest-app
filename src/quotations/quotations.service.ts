@@ -112,7 +112,15 @@ export class QuotationsService {
           },
           {
             association: 'products',
-            attributes: ['id', 'name', 'description', 'price'],
+            attributes: [
+              'id',
+              'name',
+              'description',
+              'price',
+              'thumbnail_url',
+              'minimum_order_quantity',
+              'unit_of_measure',
+            ],
             through: {
               attributes: ['id', 'quantity', 'is_customized', 'requirments'],
             },
