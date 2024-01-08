@@ -11,6 +11,7 @@ import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import toBoolean from 'src/utils/conversion/toBoolean';
 import ProductQuotationJunction from './entities/product_quotation.entity';
+import CartQuotation from 'src/cart-quotation/entities/cart-quotation.entity';
 
 @Injectable()
 export class QuotationsService {
@@ -49,6 +50,17 @@ export class QuotationsService {
           ],
         },
       );
+
+      await CartQuotation.destroy({
+        where: {
+          id: {
+            $in: createquotationDto.product_list.map(
+              (product) => product.cart_id,
+            ),
+          },
+        },
+        force: true,
+      });
 
       return {
         statusCode: 201,

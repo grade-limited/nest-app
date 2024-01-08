@@ -9,6 +9,11 @@ export class OrderProductDto {
   @ApiProperty({
     required: true,
   })
+  cart_id: number;
+
+  @ApiProperty({
+    required: true,
+  })
   quantity: number;
 
   @ApiProperty({
@@ -30,6 +35,7 @@ export class CreateOrderDto {
   })
   product_list: {
     product_id: number;
+    cart_id: number;
     quantity: number;
     unit_price: number;
     total_price: number;

@@ -11,6 +11,7 @@ import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import toBoolean from 'src/utils/conversion/toBoolean';
 import ProductOrderJunction from './entities/product_order.entity';
+import Cart from 'src/carts/entities/cart.entity';
 
 @Injectable()
 export class OrdersService {
@@ -50,6 +51,15 @@ export class OrdersService {
           ],
         },
       );
+
+      await Cart.destroy({
+        where: {
+          id: {
+            $in: createOrderDto.product_list.map((product) => product.cart_id),
+          },
+        },
+        force: true,
+      });
 
       return {
         statusCode: 201,

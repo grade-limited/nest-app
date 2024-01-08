@@ -8,6 +8,7 @@ export class CreateQuotationDto {
   })
   product_list: {
     product_id: number;
+    cart_id: number;
     quantity: number;
     is_customized: boolean;
     requirments: string;
