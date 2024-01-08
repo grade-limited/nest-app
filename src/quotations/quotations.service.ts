@@ -53,11 +53,7 @@ export class QuotationsService {
 
       await CartQuotation.destroy({
         where: {
-          id: {
-            $in: createquotationDto.product_list.map(
-              (product) => product.cart_id,
-            ),
-          },
+          id: createquotationDto.product_list.map((product) => product.cart_id),
         },
         force: true,
       });

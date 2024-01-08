@@ -54,9 +54,7 @@ export class OrdersService {
 
       await Cart.destroy({
         where: {
-          id: {
-            $in: createOrderDto.product_list.map((product) => product.cart_id),
-          },
+          id: createOrderDto.product_list.map((product) => product.cart_id),
         },
         force: true,
       });
