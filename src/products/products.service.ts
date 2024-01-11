@@ -58,6 +58,7 @@ export class ProductsService {
     brand_id?: number,
     category_id?: number,
     campaign_id?: number,
+    is_published?: boolean,
   ) {
     const pagination = new Pagination(query);
 
@@ -68,6 +69,7 @@ export class ProductsService {
     const filters = pagination.format_filters({
       brand_id,
       category_id,
+      is_published,
     });
     return pagination.arrange(
       await Product.findAndCountAll({
