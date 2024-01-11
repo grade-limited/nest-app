@@ -8,7 +8,8 @@ import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
 @Injectable()
 export class ShopService {
   async findOne(id: number) {
-    const product = await Product.findByPk(id, {
+    const product = await Product.findOne({
+      where: { id, is_published: true },
       include: [
         {
           association: 'brand',
@@ -53,6 +54,7 @@ export class ShopService {
       await Product.findAndCountAll({
         where: {
           [Op.or]: search_ops,
+          is_published: true,
           ...filters,
           ...trash_query,
         },
@@ -108,6 +110,7 @@ export class ShopService {
         },
         {
           model: Product,
+          where: { is_published: true },
           include: [
             {
               association: 'brand',

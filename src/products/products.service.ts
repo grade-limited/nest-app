@@ -144,6 +144,7 @@ export class ProductsService {
         sku,
         unit_of_measure,
         market_price,
+        is_published,
       } = updateProductDto;
 
       const product = await Product.findByPk(id);
@@ -159,6 +160,7 @@ export class ProductsService {
         sku,
         unit_of_measure,
         market_price,
+        is_published,
         ...(price !== null ? { price: JSON.stringify(price || []) } : {}),
         ...(attachments !== null
           ? { attachments: JSON.stringify(attachments || []) }

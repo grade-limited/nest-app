@@ -91,6 +91,10 @@ class Product extends Model<Product> {
   })
   'attachments': string;
 
+  @Default(true)
+  @Column
+  'is_published': boolean;
+
   @ForeignKey(() => Brand)
   @AllowNull
   @Column(DataType.BIGINT)
