@@ -133,7 +133,13 @@ export class OrdersService {
                 association: 'brand',
               },
             ],
-            attributes: ['id', 'name', 'description', 'thumbnail_url'],
+            attributes: [
+              'id',
+              'name',
+              'description',
+              'thumbnail_url',
+              'unit_of_measure',
+            ],
             through: {
               attributes: ['id', 'quantity', 'unit_price', 'total_price'],
             },
