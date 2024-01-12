@@ -128,6 +128,11 @@ export class OrdersService {
           },
           {
             association: 'products',
+            include: [
+              {
+                association: 'brand',
+              },
+            ],
             attributes: ['id', 'name', 'description', 'thumbnail_url'],
             through: {
               attributes: ['id', 'quantity', 'unit_price', 'total_price'],

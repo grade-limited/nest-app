@@ -96,7 +96,7 @@ export class QuotationsService {
           },
           {
             association: 'products',
-            attributes: ['id', 'name', 'description', 'price'],
+            attributes: ['id', 'name', 'description', 'thumbnail_url', 'price'],
             through: {
               attributes: ['id', 'quantity', 'is_customized', 'requirments'],
             },
@@ -120,6 +120,11 @@ export class QuotationsService {
           },
           {
             association: 'products',
+            include: [
+              {
+                association: 'brand',
+              },
+            ],
             attributes: [
               'id',
               'name',
