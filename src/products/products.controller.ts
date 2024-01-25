@@ -56,6 +56,11 @@ export class ProductsController {
     type: 'boolean',
     required: false,
   })
+  @ApiQuery({
+    name: 'emi_available',
+    type: 'boolean',
+    required: false,
+  })
   @ApiQuery(TrashQuery)
   @ApiQuery(ShowParanoidQuery)
   @ApiQuery(SortQuery)
@@ -68,6 +73,7 @@ export class ProductsController {
     @Query('category_id') category_id?: number,
     @Query('campaign_id') campaign_id?: number,
     @Query('is_published') is_published?: boolean,
+    @Query('emi_available') emi_available?: boolean,
   ) {
     return this.productsService.findAll(
       query,
@@ -75,6 +81,7 @@ export class ProductsController {
       category_id,
       campaign_id,
       is_published,
+      emi_available,
     );
   }
 

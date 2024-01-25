@@ -53,5 +53,8 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   'is_published': boolean;
 
   @ApiProperty()
+  'emi_available': boolean;
+
+  @ApiProperty()
   'attachments': string[];
 }

@@ -95,6 +95,10 @@ class Product extends Model<Product> {
   @Column
   'is_published': boolean;
 
+  @Default(false)
+  @Column
+  'emi_available': boolean;
+
   @ForeignKey(() => Brand)
   @AllowNull
   @Column(DataType.BIGINT)

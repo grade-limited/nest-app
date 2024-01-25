@@ -27,6 +27,7 @@ export class ProductsService {
         sku,
         unit_of_measure,
         market_price,
+        emi_available,
       } = createProductDto;
 
       await Product.create({
@@ -38,6 +39,7 @@ export class ProductsService {
         sku,
         unit_of_measure,
         market_price,
+        emi_available,
         price: JSON.stringify(price || []),
         attachments: JSON.stringify(attachments || []),
         minimum_order_quantity: JSON.stringify(minimum_order_quantity || []),
@@ -59,6 +61,7 @@ export class ProductsService {
     category_id?: number,
     campaign_id?: number,
     is_published?: boolean,
+    emi_available?: boolean,
   ) {
     const pagination = new Pagination(query);
 
@@ -70,6 +73,7 @@ export class ProductsService {
       brand_id,
       category_id,
       is_published,
+      emi_available,
     });
     return pagination.arrange(
       await Product.findAndCountAll({
@@ -147,6 +151,7 @@ export class ProductsService {
         unit_of_measure,
         market_price,
         is_published,
+        emi_available,
       } = updateProductDto;
 
       const product = await Product.findByPk(id);
@@ -163,6 +168,7 @@ export class ProductsService {
         unit_of_measure,
         market_price,
         is_published,
+        emi_available,
         ...(price !== null ? { price: JSON.stringify(price || []) } : {}),
         ...(attachments !== null
           ? { attachments: JSON.stringify(attachments || []) }
