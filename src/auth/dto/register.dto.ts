@@ -37,4 +37,26 @@ export class RegisterDto {
 
   @ApiProperty()
   referral_code?: string;
+
+  // Employeeship
+  @ApiProperty()
+  organization_id: number;
+
+  @ApiProperty()
+  employee_id: string;
+
+  @ApiProperty()
+  depertment: string;
+
+  @ApiProperty()
+  designation: string;
+
+  @ApiProperty()
+  branch: string;
+
+  @ApiProperty()
+  desk_info?: string;
+
+  @ApiProperty()
+  business_unit?: string;
 }

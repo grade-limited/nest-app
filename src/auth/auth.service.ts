@@ -1,7 +1,5 @@
 import {
   BadRequestException,
-  HttpException,
-  HttpStatus,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -22,6 +20,7 @@ import { RegisterDto } from './dto/register.dto';
 import User from 'src/users/entities/user.entity';
 import UserSession from 'src/users-sessions/entities/user-session.entity';
 import { nanoid } from 'nanoid';
+import Employeeship from 'src/employeeships/entities/employeeship.entity';
 
 @Injectable()
 export class AuthService {
@@ -61,7 +60,7 @@ export class AuthService {
       : null;
 
     try {
-      await User.create(
+      const user = await User.create(
         {
           ...registerDto,
           ...(ref_user && {
@@ -85,6 +84,28 @@ export class AuthService {
           ],
         },
       );
+
+      if (!!registerDto.organization_id) {
+        await Employeeship.create(
+          {
+            ...registerDto,
+            user_id: user.id,
+          },
+          {
+            fields: [
+              'organization_id',
+              'employee_id',
+              'depertment',
+              'designation',
+              'branch',
+              'desk_info',
+              'business_unit',
+              'user_id',
+            ],
+          },
+        );
+      }
+
       // SEND OTP HERE
       return {
         message: `An OTP sent to ${
