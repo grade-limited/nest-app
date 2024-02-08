@@ -14,7 +14,7 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 export class AddressesService {
   async create(user_extract: any, createAddressDto: CreateAddressDto) {
     try {
-      const address = await Address.create(
+      await Address.create(
         {
           ...createAddressDto,
           user_id: user_extract.id,
