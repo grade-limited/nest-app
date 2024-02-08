@@ -60,4 +60,9 @@ export class ShopController {
   LandingPage() {
     return this.shopService.LandingPage();
   }
+
+  @Get('brand-by-category/:id')
+  BrandByCategory(@Param('id') id: string) {
+    return this.shopService.BrandByCategory(+id);
+  }
 }

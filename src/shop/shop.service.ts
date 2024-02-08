@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Op } from 'sequelize';
+import Brand from 'src/brands/entities/brand.entity';
 import Category from 'src/categories/entities/category.entity';
 import Product from 'src/products/entities/product.entity';
 import Pagination from 'src/utils/Pagination';
@@ -185,5 +186,43 @@ export class ShopService {
 
   async LandingPage() {
     return await this.getParentCategoriesWithChildrenProducts();
+  }
+
+  private removeDuplicates(brands: Brand[]): Brand[] {
+    const uniquebrandsMap: Map<number, Brand> = new Map();
+
+    brands.forEach((brand) => {
+      uniquebrandsMap.set(brand.id, brand);
+    });
+
+    return Array.from(uniquebrandsMap.values());
+  }
+
+  async BrandByCategory(categoryId: number) {
+    const category = await Category.findByPk(categoryId, {
+      include: [
+        {
+          model: Product,
+          where: { is_published: true },
+          include: [
+            {
+              association: 'brand',
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!category) {
+      throw new NotFoundException(`Category not found`);
+    }
+
+    const brands = category.products?.map?.((product) => product.brand) || [];
+
+    return {
+      success: true,
+      message: 'Brands fetched successfully',
+      data: this.removeDuplicates(brands),
+    };
   }
 }
