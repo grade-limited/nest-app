@@ -75,18 +75,18 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect password! Please try again.');
 
     // Check total device the employee is signed in
-    if (
-      (await employee.$count('sessions', {
-        where: {
-          logged_out_at: {
-            [Op.eq]: null,
-          },
-        },
-      })) >= employee.getDataValue('max_session')
-    )
-      throw new UnauthorizedException(
-        'You have already reached the maximum logged in devices.',
-      );
+    // if (
+    //   (await employee.$count('sessions', {
+    //     where: {
+    //       logged_out_at: {
+    //         [Op.eq]: null,
+    //       },
+    //     },
+    //   })) >= employee.getDataValue('max_session')
+    // )
+    //   throw new UnauthorizedException(
+    //     'You have already reached the maximum logged in devices.',
+    //   );
 
     // Create jwt token
     const jwt = await this.jwtService.signAsync(
