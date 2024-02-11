@@ -20,6 +20,9 @@ export class CartQuotationService {
       await CartQuotation.create(
         {
           ...createCartQuotationDto,
+          custom_attributes: JSON.stringify(
+            createCartQuotationDto.custom_attributes || {},
+          ),
           user_id: user_extract.id,
         },
         {
@@ -62,9 +65,9 @@ export class CartQuotationService {
     updateCartQuotationDto: UpdateCartQuotationDto,
   ) {
     try {
-      const { quantity } = updateCartQuotationDto;
+      const { quantity, custom_attributes } = updateCartQuotationDto;
 
-      const cartQuotation = await CartQuotation.findByPk(id, {});
+      const cartQuotation = await CartQuotation.findByPk(id);
 
       if (!cartQuotation) throw new NotFoundException(`Cart not found`);
 
@@ -76,6 +79,9 @@ export class CartQuotationService {
 
       await cartQuotation.update({
         quantity,
+        ...(custom_attributes && {
+          custom_attributes: JSON.stringify(custom_attributes || {}),
+        }),
       });
 
       return {

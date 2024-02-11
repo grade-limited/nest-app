@@ -6,4 +6,10 @@ export class CreateCartQuotationDto {
 
   @ApiProperty()
   quantity: number;
+
+  @ApiProperty()
+  custom_attributes: {
+    description: string;
+    attachments: string[];
+  };
 }

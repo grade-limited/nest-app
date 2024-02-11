@@ -30,8 +30,18 @@ class CartQuotation extends Model<CartQuotation> {
   @Column(DataType.INTEGER)
   'quantity': number;
 
-  //relations
+  @AllowNull
+  @Column({
+    type: DataType.STRING(1000),
+    get: function () {
+      return this.getDataValue('custom_attributes')
+        ? JSON.parse(this.getDataValue('custom_attributes') || '{}')
+        : null;
+    },
+  })
+  'custom_attributes': string;
 
+  //relations
   @ForeignKey(() => User)
   @AllowNull
   @Column(DataType.BIGINT)
