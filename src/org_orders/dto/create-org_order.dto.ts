@@ -6,10 +6,10 @@ export class OrgOrderDto {
   })
   product_id: number;
 
-  //   @ApiProperty({
-  //     required: true,
-  //   })
-  //   cart_id: number;
+  @ApiProperty({
+    required: true,
+  })
+  Orgcart_id: number;
 
   @ApiProperty({
     required: true,
