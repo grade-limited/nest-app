@@ -26,6 +26,7 @@ import Order from 'src/orders/entities/order.entity';
 import ProductOrderJunction from 'src/orders/entities/product_order.entity';
 import Quotation from 'src/quotations/entities/quotation.entity';
 import ProductQuotationJunction from '../../quotations/entities/product_quotation.entity';
+import OrgOrder from 'src/org_orders/entities/org_order.entity';
 
 @Table({
   tableName: 'product',
@@ -112,6 +113,9 @@ class Product extends Model<Product> {
 
   @BelongsToMany(() => Order, () => ProductOrderJunction)
   'orders': Order[];
+
+  @BelongsToMany(() => OrgOrder, () => ProductOrderJunction)
+  'org_orders': OrgOrder[];
 
   @BelongsToMany(() => Quotation, () => ProductQuotationJunction)
   'quotations': Quotation[];
