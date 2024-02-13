@@ -40,6 +40,11 @@ export class AddressesController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'user_id',
+    type: 'number',
+    required: false,
+  })
   @ApiQuery(TrashQuery)
   @ApiQuery(ShowParanoidQuery)
   @ApiQuery(SortQuery)
