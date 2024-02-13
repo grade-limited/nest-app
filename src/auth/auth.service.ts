@@ -232,7 +232,12 @@ export class AuthService {
 
   // Validate User and Get Information
   validate(user: any) {
-    return user;
+    return {
+      ...user.dataValues,
+      kam_access: user?.dataValues?.organizations?.[0]?.Employeeship?.is_kam
+        ? user?.dataValues?.organizations?.[0]
+        : null,
+    };
   }
 
   verify(verifyDto: VerifyDto) {
