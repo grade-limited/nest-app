@@ -17,10 +17,10 @@ import {
   Default,
   BelongsToMany,
 } from 'sequelize-typescript';
-import ProductOrderJunction from 'src/orders/entities/product_order.entity';
 import Organization from 'src/organizations/entities/organization.entity';
 import Product from 'src/products/entities/product.entity';
 import User from 'src/users/entities/user.entity';
+import ProductOrgOrderJunction from './product_org_order_junction.entity';
 @Table({
   tableName: 'org_order',
 })
@@ -94,16 +94,16 @@ class OrgOrder extends Model<OrgOrder> {
   @BelongsTo(() => User)
   'user': User;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => Organization)
   @AllowNull
   @Column(DataType.BIGINT)
   'organization_id': number;
 
   @BelongsTo(() => Organization)
-  'organization': Organization;
+  'organizations': Organization;
 
-  @BelongsToMany(() => Product, () => ProductOrderJunction)
-  'products': Product[];
+  @BelongsToMany(() => Product, () => ProductOrgOrderJunction)
+  'products': ProductOrgOrderJunction[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

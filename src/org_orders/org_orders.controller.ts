@@ -36,11 +36,7 @@ export class OrgOrdersController {
   @HttpCode(201)
   @Post()
   create(@Request() req, @Body() createOrgOrderDto: CreateOrgOrderDto) {
-    return this.orgOrdersService.create(
-      req.user,
-      req.Organization,
-      createOrgOrderDto,
-    );
+    return this.orgOrdersService.create(req.user, createOrgOrderDto);
   }
 
   @Get()

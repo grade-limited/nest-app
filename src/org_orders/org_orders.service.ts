@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateOrgOrderDto } from './dto/create-org_order.dto';
 import { UpdateOrgOrderDto } from './dto/update-org_order.dto';
@@ -11,20 +12,22 @@ import Pagination from 'src/utils/Pagination';
 import { Op } from 'sequelize';
 import toBoolean from 'src/utils/conversion/toBoolean';
 import ProductOrgOrderJunction from './entities/product_org_order_junction.entity';
+import OrgCart from 'src/org_carts/entities/org_cart.entity';
 
 @Injectable()
 export class OrgOrdersService {
-  async create(
-    user_extract: any,
-    organization_extract: any,
-    createOrgOrderDto: CreateOrgOrderDto,
-  ) {
+  async create(user_extract: any, createOrgOrderDto: CreateOrgOrderDto) {
     try {
+      if (!user_extract.organizations?.[0]?.Employeeship?.is_kam)
+        throw new UnauthorizedException(
+          `You are not assigned to any Organization`,
+        );
+
       const orgOrder = await OrgOrder.create(
         {
           ...createOrgOrderDto,
           user_id: user_extract.id,
-          organization_id: organization_extract.id,
+          organization_id: user_extract.organizations?.[0]?.id,
         },
         {
           fields: [
@@ -56,6 +59,16 @@ export class OrgOrdersService {
           ],
         },
       );
+      await OrgCart.destroy({
+        where: {
+          id: createOrgOrderDto.product_list.map((product) => product.cart_id),
+        },
+        force: true,
+      });
+      return {
+        statusCode: 201,
+        message: 'Orders placed successfully',
+      };
     } catch (error) {
       throw new BadRequestException(
         error?.errors?.[0]?.message || error?.message || error,
@@ -93,7 +106,10 @@ export class OrgOrdersService {
             association: 'user',
             attributes: ['id', 'first_name', 'last_name', 'username'],
           },
-
+          {
+            association: 'organizations',
+            attributes: ['id', 'name'],
+          },
           {
             association: 'products',
             attributes: ['id', 'name', 'description', 'thumbnail_url'],
@@ -141,7 +157,7 @@ export class OrgOrdersService {
       }
 
       return {
-        message: `Organization's Order not found fetched successfully`,
+        message: `Organization's Order fetched successfully`,
         data: orgOrder,
       };
     } catch (error) {
