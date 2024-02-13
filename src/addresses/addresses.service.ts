@@ -7,6 +7,7 @@ import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import Address from './entities/address.entity';
 import { IPaginationQuery } from 'src/utils/Pagination/dto/query.dto';
+import { Op } from 'sequelize';
 import Pagination from 'src/utils/Pagination';
 import toBoolean from 'src/utils/conversion/toBoolean';
 
@@ -36,7 +37,8 @@ export class AddressesService {
 
   async findAll(query: IPaginationQuery, user_id?: number) {
     const pagination = new Pagination(query);
-    const { trash_query } = pagination.get_attributes();
+    const { limit, offset, paranoid, trash_query, order } =
+      pagination.get_attributes();
 
     const filters = pagination.format_filters({
       user_id,
@@ -47,6 +49,10 @@ export class AddressesService {
           ...filters,
           ...trash_query,
         },
+        order,
+        limit,
+        offset,
+        paranoid,
       }),
     );
   }
