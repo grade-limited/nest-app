@@ -32,6 +32,7 @@ import Order from 'src/orders/entities/order.entity';
 import Organization from 'src/organizations/entities/organization.entity';
 import Employeeship from 'src/employeeships/entities/employeeship.entity';
 import CartQuotation from 'src/cart-quotation/entities/cart-quotation.entity';
+import Address from 'src/addresses/entities/address.entity';
 
 @Table({
   tableName: 'user',
@@ -118,6 +119,9 @@ class User extends Model<User> {
 
   @HasMany(() => Cart)
   'carts': Cart[];
+
+  @HasMany(() => Address)
+  'addresses': Address[];
 
   @HasMany(() => CartQuotation)
   'cart_quotation': CartQuotation[];

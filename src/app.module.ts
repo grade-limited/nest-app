@@ -28,6 +28,9 @@ import { NewslettersModule } from './newsletters/newsletters.module';
 import { QuotationsModule } from './quotations/quotations.module';
 import { OrdersModule } from './orders/orders.module';
 import { CartQuotationModule } from './cart-quotation/cart-quotation.module';
+import { AddressesModule } from './addresses/addresses.module';
+import { OrgOrdersModule } from './org_orders/org_orders.module';
+import { OrgCartsModule } from './org_carts/org_carts.module';
 
 @Module({
   imports: [
@@ -60,6 +63,9 @@ import { CartQuotationModule } from './cart-quotation/cart-quotation.module';
     QuotationsModule,
     OrdersModule,
     CartQuotationModule,
+    AddressesModule,
+    OrgOrdersModule,
+    OrgCartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

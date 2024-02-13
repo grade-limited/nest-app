@@ -20,6 +20,7 @@ import {
 import Employeeship from 'src/employeeships/entities/employeeship.entity';
 import User from 'src/users/entities/user.entity';
 import Request from 'src/requests/entities/request.entity';
+import OrgOrder from 'src/org_orders/entities/org_order.entity';
 
 @Table({
   tableName: 'organization',
@@ -112,6 +113,9 @@ class Organization extends Model<Organization> {
 
   @HasMany(() => Request)
   'request': Request[];
+
+  @HasMany(() => OrgOrder)
+  'orgOrders': OrgOrder[];
 
   @AllowNull(true)
   @IsUrl
