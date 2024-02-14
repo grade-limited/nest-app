@@ -36,14 +36,29 @@ export class BrandsController {
   }
 
   @Get()
+  @Get()
+  @ApiQuery({
+    name: 'parent_id',
+    type: 'number',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'only_parent',
+    type: 'boolean',
+    required: false,
+  })
   @ApiQuery(TrashQuery)
   @ApiQuery(ShowParanoidQuery)
   @ApiQuery(SortQuery)
   @ApiQuery(PageQuery)
   @ApiQuery(LimitQuery)
   @ApiQuery(SearchQuery)
-  findAll(@Query() query: IPaginationQuery) {
-    return this.brandsService.findAll(query);
+  findAll(
+    @Query() query: IPaginationQuery,
+    @Query('parent_id') parent_id?: number,
+    @Query('only_parent') only_parent?: boolean,
+  ) {
+    return this.brandsService.findAll(query, parent_id, only_parent);
   }
 
   @Get(':id')

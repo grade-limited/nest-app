@@ -11,6 +11,8 @@ import {
   DeletedAt,
   HasMany,
   NotEmpty,
+  ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
 import Product from 'src/products/entities/product.entity';
 @Table({
@@ -43,6 +45,20 @@ class Brand extends Model<Brand> {
 
   @HasMany(() => Product)
   'products': Product[];
+
+  @ForeignKey(() => Brand)
+  @AllowNull
+  @Column(DataType.BIGINT)
+  'parent_id': number;
+
+  @BelongsTo(() => Brand)
+  'parent': Brand;
+
+  @HasMany(() => Brand, {
+    foreignKey: 'parent_id',
+    as: 'children',
+  })
+  'children': Brand[];
 
   @CreatedAt
   @Column({ field: 'created_at' })

@@ -8,6 +8,9 @@ export class UpdateBrandDto extends PartialType(CreateBrandDto) {
   'description': string;
 
   @ApiProperty()
+  'parent_id': number;
+
+  @ApiProperty()
   'thumbnail_url': string;
 
   @ApiProperty()

@@ -13,6 +13,11 @@ export class CreateBrandDto {
   @ApiProperty({
     required: false,
   })
+  'parent_id': number;
+
+  @ApiProperty({
+    required: false,
+  })
   'thumbnail_url': string;
 
   @ApiProperty({

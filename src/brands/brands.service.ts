@@ -15,13 +15,15 @@ import toBoolean from 'src/utils/conversion/toBoolean';
 export class BrandsService {
   async create(createChapterDto: CreateBrandDto) {
     try {
-      const { name, description, thumbnail_url, cover_url } = createChapterDto;
+      const { name, description, thumbnail_url, cover_url, parent_id } =
+        createChapterDto;
 
       await Brand.create({
         name,
         description,
         thumbnail_url,
         cover_url,
+        parent_id,
       });
       return {
         statusCode: 201,
@@ -34,20 +36,39 @@ export class BrandsService {
     }
   }
 
-  async findAll(query: IPaginationQuery) {
+  async findAll(
+    query: IPaginationQuery,
+    parent_id?: number,
+    only_parent?: boolean,
+  ) {
     const pagination = new Pagination(query);
 
     const { limit, offset, paranoid, trash_query, order } =
       pagination.get_attributes();
 
     const search_ops = pagination.get_search_ops(['name']);
+    const filters = pagination.format_filters({
+      parent_id,
+    });
 
     return pagination.arrange(
       await Brand.findAndCountAll({
         where: {
           [Op.or]: search_ops,
+          ...filters,
           ...trash_query,
+
+          ...(toBoolean(only_parent)
+            ? {
+                parent_id: { [Op.eq]: null },
+              }
+            : {}),
         },
+        include: [
+          {
+            association: 'parent',
+          },
+        ],
         order,
         limit,
         offset,
@@ -59,6 +80,11 @@ export class BrandsService {
   async findOne(id: number) {
     try {
       const brand = await Brand.findByPk(id, {
+        include: [
+          {
+            association: 'parent',
+          },
+        ],
         paranoid: false,
       });
 
@@ -76,7 +102,8 @@ export class BrandsService {
   }
   async update(id: number, updateBrandDto: UpdateBrandDto) {
     try {
-      const { name, description, thumbnail_url, cover_url } = updateBrandDto;
+      const { name, description, thumbnail_url, cover_url, parent_id } =
+        updateBrandDto;
 
       const brand = await Brand.findByPk(id, {});
 
@@ -89,6 +116,7 @@ export class BrandsService {
         description,
         thumbnail_url,
         cover_url,
+        parent_id,
       });
 
       return {
