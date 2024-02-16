@@ -100,7 +100,7 @@ class OrgOrder extends Model<OrgOrder> {
   'organization_id': number;
 
   @BelongsTo(() => Organization)
-  'organizations': Organization;
+  'organization': Organization;
 
   @BelongsToMany(() => Product, () => ProductOrgOrderJunction)
   'products': ProductOrgOrderJunction[];

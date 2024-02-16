@@ -1,4 +1,5 @@
 import {
+  AfterCreate,
   AllowNull,
   AutoIncrement,
   Column,
@@ -56,6 +57,19 @@ class ProductOrderJunction extends Model<ProductOrderJunction> {
   @DeletedAt
   @Column({ field: 'deleted_at' })
   'deleted_at': Date;
+
+  @AfterCreate
+  static async addSoldProduct(instance: ProductOrderJunction) {
+    const product = await Product.findByPk(instance.product_id);
+    await product.update(
+      {
+        sold: product.sold + instance.quantity,
+      },
+      {
+        fields: ['sold'],
+      },
+    );
+  }
 }
 
 export default ProductOrderJunction;

@@ -135,6 +135,10 @@ class Product extends Model<Product> {
   @HasMany(() => Bookmark)
   'bookmarks': Bookmark[];
 
+  @Default(0)
+  @Column(DataType.BIGINT)
+  'sold': number;
+
   @CreatedAt
   @Column({ field: 'created_at' })
   'created_at': Date;

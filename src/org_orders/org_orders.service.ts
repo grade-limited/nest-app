@@ -107,7 +107,7 @@ export class OrgOrdersService {
             attributes: ['id', 'first_name', 'last_name', 'username'],
           },
           {
-            association: 'organizations',
+            association: 'organization',
             attributes: ['id', 'name'],
           },
           {
@@ -140,6 +140,10 @@ export class OrgOrdersService {
           {
             association: 'user',
             attributes: ['id', 'first_name', 'last_name', 'username'],
+          },
+          {
+            association: 'organization',
+            attributes: ['id', 'name'],
           },
           {
             association: 'products',
