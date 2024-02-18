@@ -26,7 +26,7 @@ export class CartQuotationService {
           user_id: user_extract.id,
         },
         {
-          fields: ['user_id', 'product_id', 'quantity'],
+          fields: ['user_id', 'product_id', 'quantity', 'custom_attributes'],
         },
       );
       return {
