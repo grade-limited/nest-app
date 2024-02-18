@@ -15,16 +15,24 @@ const geoip = require('geoip-lite');
 const bcrypt = require('bcrypt');
 
 import { JwtService } from '@nestjs/jwt';
-import { Op } from 'sequelize';
 import { RegisterDto } from './dto/register.dto';
 import User from 'src/users/entities/user.entity';
 import UserSession from 'src/users-sessions/entities/user-session.entity';
 import { nanoid } from 'nanoid';
 import Employeeship from 'src/employeeships/entities/employeeship.entity';
+import { SmsService } from 'src/sms/sms.service';
+import { totp } from 'otplib';
+
+totp.options = {
+  digits: 6,
+  epoch: Date.now(),
+  step: 300,
+  window: 300,
+};
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService, private smsService: SmsService) {}
   async create_username(name: string) {
     const id = (await User.findOne({
       where: { username: name },
@@ -106,7 +114,15 @@ export class AuthService {
         );
       }
 
-      // SEND OTP HERE
+      if (registerDto.primary_contact === 'phone' && registerDto.phone) {
+        this.smsService.sendSms(
+          registerDto.phone,
+          `Your OTP for Grade E-mart is ${totp.generate(user.referral_code)}`,
+        );
+      } else {
+        // SEND EMAIL HERE
+      }
+
       return {
         message: `An OTP sent to ${
           registerDto.primary_contact === 'phone'

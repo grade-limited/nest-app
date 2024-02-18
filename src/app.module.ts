@@ -31,6 +31,7 @@ import { CartQuotationModule } from './cart-quotation/cart-quotation.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { OrgOrdersModule } from './org_orders/org_orders.module';
 import { OrgCartsModule } from './org_carts/org_carts.module';
+import { SmsModule } from './sms/sms.module';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { OrgCartsModule } from './org_carts/org_carts.module';
     AddressesModule,
     OrgOrdersModule,
     OrgCartsModule,
+    SmsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
