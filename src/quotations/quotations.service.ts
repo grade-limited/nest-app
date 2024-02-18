@@ -135,7 +135,13 @@ export class QuotationsService {
               'unit_of_measure',
             ],
             through: {
-              attributes: ['id', 'quantity', 'is_customized', 'requirments'],
+              attributes: [
+                'id',
+                'quantity',
+                'is_customized',
+                'requirments',
+                'attachments',
+              ],
             },
           },
         ],
