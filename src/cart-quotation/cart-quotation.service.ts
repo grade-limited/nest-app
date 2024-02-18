@@ -55,7 +55,13 @@ export class CartQuotationService {
           ],
         },
       ],
-      attributes: ['id', 'quantity', 'created_at', 'updated_at'],
+      attributes: [
+        'id',
+        'quantity',
+        'custom_attributes',
+        'created_at',
+        'updated_at',
+      ],
     });
   }
 
