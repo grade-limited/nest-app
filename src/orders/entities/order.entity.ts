@@ -16,7 +16,6 @@ import {
   IsIn,
   Default,
   BelongsToMany,
-  BeforeCreate,
   AfterCreate,
 } from 'sequelize-typescript';
 import User from 'src/users/entities/user.entity';

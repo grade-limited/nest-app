@@ -15,7 +15,6 @@ const geoip = require('geoip-lite');
 const bcrypt = require('bcrypt');
 
 import { JwtService } from '@nestjs/jwt';
-import { Op } from 'sequelize';
 import { RegisterDto } from './dto/register.dto';
 import User from 'src/users/entities/user.entity';
 import UserSession from 'src/users-sessions/entities/user-session.entity';
