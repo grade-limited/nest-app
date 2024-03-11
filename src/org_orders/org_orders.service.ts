@@ -23,15 +23,27 @@ export class OrgOrdersService {
           `You are not assigned to any Organization`,
         );
 
+      const invoice_prefix = `GD-${user_extract.organizations[0].business_subtype
+        ?.toUpperCase()
+        .substring(0, 3)}-${user_extract.organizations[0].name
+        ?.toUpperCase()
+        .substring(0, 3)}-${user_extract.organizations[0].Employeeship?.branch
+        .toUpperCase()
+        .substring(0, 3)}`;
+
       const orgOrder = await OrgOrder.create(
         {
           ...createOrgOrderDto,
           user_id: user_extract.id,
           organization_id: user_extract.organizations?.[0]?.id,
+          invoice_prefix,
+          invoice_id: '',
         },
         {
           fields: [
             'user_id',
+            'invoice_id',
+            'invoice_prefix',
             'recipient_name',
             'recipient_number',
             'recipient_email',
