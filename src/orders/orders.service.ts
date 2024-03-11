@@ -17,14 +17,25 @@ import Cart from 'src/carts/entities/cart.entity';
 export class OrdersService {
   async create(user_extract: any, createOrderDto: CreateOrderDto) {
     try {
+      const invoice_prefix = `GM-${user_extract.organizations[0].business_subtype
+        ?.toUpperCase()
+        .substring(0, 3)}-${user_extract.organizations[0].name
+        ?.toUpperCase()
+        .substring(0, 3)}-${user_extract.organizations[0].Employeeship?.branch
+        .toUpperCase()
+        .substring(0, 3)}`;
       const order = await Order.create(
         {
           ...createOrderDto,
           user_id: user_extract.id,
+          invoice_prefix,
+          invoice_id: '',
         },
         {
           fields: [
             'user_id',
+            'invoice_prefix',
+            'invoice_id',
             'recipient_name',
             'recipient_number',
             'recipient_email',

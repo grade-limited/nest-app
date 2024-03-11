@@ -16,6 +16,8 @@ import {
   IsIn,
   Default,
   BelongsToMany,
+  BeforeCreate,
+  AfterCreate,
 } from 'sequelize-typescript';
 import User from 'src/users/entities/user.entity';
 import ProductOrderJunction from './product_order.entity';
@@ -29,6 +31,14 @@ class Order extends Model<Order> {
   @AutoIncrement
   @Column(DataType.BIGINT)
   'id': number;
+
+  @AllowNull(true)
+  @Column
+  'invoice_prefix': string;
+
+  @AllowNull(true)
+  @Column
+  'invoice_id': string;
 
   @AllowNull(false)
   @NotEmpty({
@@ -108,5 +118,13 @@ class Order extends Model<Order> {
   @DeletedAt
   @Column({ field: 'deleted_at' })
   'deleted_at': Date;
+
+  @AfterCreate
+  static async createinvoiceid(instance: Order) {
+    instance.invoice_id = `${instance.invoice_prefix}-${String(
+      instance.id,
+    ).padStart(5, '0')}`;
+    instance.save();
+  }
 }
 export default Order;
