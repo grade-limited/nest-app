@@ -101,6 +101,7 @@ export class OrgOrdersService {
       'recipient_name',
       'recipient_number',
       'recipient_email',
+      'invoice_id',
     ]);
     const filters = pagination.format_filters({
       user_id,
