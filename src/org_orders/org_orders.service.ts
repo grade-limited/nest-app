@@ -152,11 +152,27 @@ export class OrgOrdersService {
         include: [
           {
             association: 'user',
-            attributes: ['id', 'first_name', 'last_name', 'username'],
+            attributes: [
+              'id',
+              'first_name',
+              'last_name',
+              'username',
+              'phone',
+              'email',
+            ],
+            include: [
+              {
+                association: 'organizations',
+                through: {
+                  where: {
+                    employeeship_status: 'confirmed',
+                  },
+                },
+              },
+            ],
           },
           {
             association: 'organization',
-            attributes: ['id', 'name'],
           },
           {
             association: 'products',

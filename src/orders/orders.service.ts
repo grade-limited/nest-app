@@ -122,6 +122,9 @@ export class OrdersService {
             },
           },
         ],
+        attributes: {
+          exclude: ['invoice_header'],
+        },
         order,
         limit,
         offset,
@@ -136,7 +139,17 @@ export class OrdersService {
         include: [
           {
             association: 'user',
-            attributes: ['id', 'first_name', 'last_name', 'username'],
+            attributes: ['id', 'first_name', 'last_name', 'username', 'phone'],
+            include: [
+              {
+                association: 'organizations',
+                through: {
+                  where: {
+                    employeeship_status: 'confirmed',
+                  },
+                },
+              },
+            ],
           },
           {
             association: 'products',

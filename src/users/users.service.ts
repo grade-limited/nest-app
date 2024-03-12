@@ -105,6 +105,14 @@ export class UsersService {
         },
         include: [
           {
+            association: 'organizations',
+            through: {
+              where: {
+                employeeship_status: 'confirmed',
+              },
+            },
+          },
+          {
             association: 'referred_by',
             attributes: [
               'id',
@@ -128,6 +136,26 @@ export class UsersService {
 
   async findOne(id: number) {
     const user = await User.findByPk(id, {
+      include: [
+        {
+          association: 'organizations',
+          through: {
+            where: {
+              employeeship_status: 'confirmed',
+            },
+          },
+        },
+        {
+          association: 'referred_by',
+          attributes: [
+            'id',
+            'first_name',
+            'last_name',
+            'username',
+            'display_picture',
+          ],
+        },
+      ],
       attributes: {
         exclude: ['password'],
       },
