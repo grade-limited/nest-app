@@ -21,6 +21,7 @@ import {
 import User from 'src/users/entities/user.entity';
 import ProductOrderJunction from './product_order.entity';
 import Product from 'src/products/entities/product.entity';
+import sendEmail from 'src/utils/email/send';
 
 @Table({
   tableName: 'order',
@@ -124,6 +125,22 @@ class Order extends Model<Order> {
       instance.id,
     ).padStart(5, '0')}`;
     instance.save();
+  }
+
+  @AfterCreate
+  static async sendEmailOnOrder(instance: Order) {
+    // Send email
+    await sendEmail({
+      to_name:
+        (await instance.$get('user')).dataValues.first_name ||
+        instance.recipient_name,
+      message: `Your order has been placed. Your invoice id is ${instance.invoice_id}`,
+      from_name: 'Team Grade Employee Mart',
+      reply_to: 'sales@gradebd.com',
+      to_email:
+        (await instance.$get('user')).dataValues.email ||
+        instance.recipient_email,
+    });
   }
 }
 export default Order;
