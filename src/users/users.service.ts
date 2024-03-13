@@ -33,7 +33,7 @@ export class UsersService {
       : null;
 
     try {
-      await User.create(
+      const user = await User.create(
         {
           ...createUserDto,
           ...(ref_user && {
@@ -64,6 +64,7 @@ export class UsersService {
             ? createUserDto.phone
             : createUserDto.email
         }.`,
+        data: user.dataValues,
       };
     } catch (error) {
       throw new BadRequestException(

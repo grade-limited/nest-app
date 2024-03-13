@@ -27,7 +27,7 @@ export class OrganizationsService {
         instagram_url,
       } = createOrganizationDto;
 
-      await Organization.create({
+      const org = await Organization.create({
         name,
         contact_number,
         contact_email,
@@ -41,6 +41,7 @@ export class OrganizationsService {
       return {
         statusCode: 201,
         message: `${name} registered as a organization successfully`,
+        data: org.dataValues,
       };
     } catch (error) {
       throw new BadRequestException(
