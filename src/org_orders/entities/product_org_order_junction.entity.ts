@@ -44,7 +44,7 @@ class ProductOrgOrderJunction extends Model<ProductOrgOrderJunction> {
 
   @AllowNull(false)
   @Column(DataType.FLOAT)
-  'total_price': number;
+  'discount': number;
 
   @CreatedAt
   @Column({ field: 'created_at' })

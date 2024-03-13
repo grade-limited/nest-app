@@ -67,7 +67,7 @@ export class OrgOrdersService {
             'orgorder_id',
             'quantity',
             'unit_price',
-            'total_price',
+            'discount',
           ],
         },
       );

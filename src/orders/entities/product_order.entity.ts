@@ -40,11 +40,11 @@ class ProductOrderJunction extends Model<ProductOrderJunction> {
 
   @AllowNull(false)
   @Column(DataType.FLOAT)
-  'unit_price': number;
+  'discount': number;
 
   @AllowNull(false)
   @Column(DataType.FLOAT)
-  'total_price': number;
+  'unit_price': number;
 
   @CreatedAt
   @Column({ field: 'created_at' })

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
 
 export class OrgOrderDto {
   @ApiProperty({
@@ -9,7 +9,7 @@ export class OrgOrderDto {
   @ApiProperty({
     required: true,
   })
-  Orgcart_id: number;
+  cart_id: number;
 
   @ApiProperty({
     required: true,
@@ -22,9 +22,10 @@ export class OrgOrderDto {
   unit_price: number;
 
   @ApiProperty({
-    required: true,
+    required: false,
+    default: 0,
   })
-  total_price: number;
+  discount: number;
 }
 
 export class CreateOrgOrderDto {
@@ -32,14 +33,11 @@ export class CreateOrgOrderDto {
     required: true,
     type: 'object',
     isArray: true,
+    items: {
+      $ref: getSchemaPath(OrgOrderDto),
+    },
   })
-  product_list: {
-    product_id: number;
-    cart_id: number;
-    quantity: number;
-    unit_price: number;
-    total_price: number;
-  }[];
+  product_list: OrgOrderDto[];
 
   @ApiProperty({
     enum: ['API', 'Website', 'Android', 'iOS', 'Admin'],

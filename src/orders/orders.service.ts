@@ -58,7 +58,7 @@ export class OrdersService {
             'order_id',
             'quantity',
             'unit_price',
-            'total_price',
+            'discount',
           ],
         },
       );
