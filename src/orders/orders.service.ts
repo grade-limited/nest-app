@@ -118,6 +118,7 @@ export class OrdersService {
                 'quantity',
                 'unit_price',
                 'discount',
+                'total_price',
               ],
             },
           },
@@ -166,7 +167,13 @@ export class OrdersService {
               'unit_of_measure',
             ],
             through: {
-              attributes: ['id', 'quantity', 'unit_price', 'discount'],
+              attributes: [
+                'id',
+                'quantity',
+                'unit_price',
+                'discount',
+                'total_price',
+              ],
             },
           },
         ],

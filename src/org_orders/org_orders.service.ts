@@ -134,6 +134,7 @@ export class OrgOrdersService {
                 'quantity',
                 'unit_price',
                 'discount',
+                'total_price',
               ],
             },
           },
@@ -178,7 +179,13 @@ export class OrgOrdersService {
             association: 'products',
             attributes: ['id', 'name', 'description', 'thumbnail_url'],
             through: {
-              attributes: ['id', 'quantity', 'unit_price', 'discount'],
+              attributes: [
+                'id',
+                'quantity',
+                'unit_price',
+                'discount',
+                'total_price',
+              ],
             },
           },
         ],

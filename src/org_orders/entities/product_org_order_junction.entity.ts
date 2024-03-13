@@ -46,6 +46,17 @@ class ProductOrgOrderJunction extends Model<ProductOrgOrderJunction> {
   @Column(DataType.FLOAT)
   'discount': number;
 
+  @Column({
+    type: DataType.VIRTUAL,
+    get(this: ProductOrgOrderJunction) {
+      return (
+        this.getDataValue('unit_price') * this.getDataValue('quantity') -
+        this.getDataValue('discount')
+      );
+    },
+  })
+  'total_price': number;
+
   @CreatedAt
   @Column({ field: 'created_at' })
   'created_at': Date;
